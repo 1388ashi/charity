@@ -1,0 +1,11 @@
+{
+    "name": "Companion",
+    "alias": "companion",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Companion\\Providers\\CompanionServiceProvider"
+    ],
+    "files": []
+}

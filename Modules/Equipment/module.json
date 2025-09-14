@@ -1,0 +1,11 @@
+{
+    "name": "Equipment",
+    "alias": "equipment",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Equipment\\Providers\\EquipmentServiceProvider"
+    ],
+    "files": []
+}

@@ -1,0 +1,12 @@
+{
+    "This invoice is already processed": "این صورت حساب قابل پرداخت نمیباشد",
+    "This invoice is expired": "این صورت حساب منقضی شده",
+    "Payment failed": "پرداخت شکست خورد",
+    "Payment made successfully": "پرداخت با موفقیت انجام شد",
+    ":class_name by id :id cannot be paid": "کلاس :class_name با آیدی :id قابل پرداخت نمیباشد",
+    "Payment made from your wallet": "پرداخت از کیف پول شما انجام شد",
+    "Connecting to gateway": "وصل شدن به درگاه",
+    "Only pending invoices can go success": "فقط وضعیت صورت حساب های در حال انتظار قابل موفق شدن هستند",
+    "Only pending invoices can go failed": "فقط وضعیت صورت حساب های در حال انتظار قابل شکست خوردن هستند",
+    "Insufficient funds": "موجودی کافی نیست"
+}

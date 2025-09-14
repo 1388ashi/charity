@@ -1,0 +1,34 @@
+.color-menu .app-sidebar {
+    background: #17263a !important;
+}
+
+.color-menu .app-sidebar .side-menu .slide a.active, .color-menu .app-sidebar .side-menu .slide a:hover {
+    color: #fff !important;
+    background: #36f !important;
+}
+.color-menu .app-sidebar .side-menu .slide.is-expanded a.slide-item.active , .color-menu .app-sidebar .side-menu .sub-slide a:hover ,.color-menu .app-sidebar .side-menu .slide.is-expanded a.slide-item:hover {
+    color: #36f !important;
+    background: 0 0 !important;
+}
+.side-menu__item {
+    margin: 5px 0;
+}
+.app-sidebar__user .user-pic .avatar-xxl {
+    border: 3px solid #2c4669;
+}
+.side-menu {
+    padding: 10px;
+}
+
+.color-menu .app-sidebar .side-menu__item.active::before {
+    border-left: unset;
+}
+.color-menu .app-sidebar .app-sidebar__user .app-sidebar__user-name.text-muted {
+    color: #9ba5ca !important;
+}
+.side-menu__item {
+    padding: 12px 15px 12px 15px;
+}
+.color-menu .app-sidebar .Annoucement_card {
+    background: #1c2f48;
+}

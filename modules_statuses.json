@@ -1,0 +1,12 @@
+{
+    "Auth": true,
+    "Area": true,
+    "Admin": true,
+    "Dashboard": true,
+    "Core": true,
+    "User": true,
+    "Partner": true,
+    "Equipment": true,
+    "Report": true,
+    "Companion": true
+}
