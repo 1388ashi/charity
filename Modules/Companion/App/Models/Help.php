@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Companion\Models;
+namespace Modules\Companion\App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -10,7 +10,7 @@ use Modules\Equipment\App\Models\Equipment;
 
 class Help extends Model
 {
-    protected $fillable = ['companion_id','type'];
+    protected $fillable = ['name','companion_id','type','national_code','status_payment','mobile'];
 
     public function equipments()
     {

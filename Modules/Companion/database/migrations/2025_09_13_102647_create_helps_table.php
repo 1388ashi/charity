@@ -14,6 +14,7 @@ return new class extends Migration
             $table->enum('type', ['cash', 'objects']);
             $table->string('name');
             $table->string('national_code');
+            $table->boolean('status_payment')->nullable();
             $table->string('mobile');
             $table->timestamps();
         });
