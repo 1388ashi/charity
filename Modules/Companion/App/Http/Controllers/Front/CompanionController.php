@@ -9,11 +9,13 @@ use Modules\Companion\App\Http\Requests\Front\EquipmentHelpRequest;
 use Modules\Companion\App\Models\CompanionCode;
 use Modules\Companion\App\Models\Help;
 use Modules\Equipment\App\Models\Equipment;
+use Modules\Invoice\App\Models\Payment;
 
 class CompanionController extends Controller
 {
     public function helpPage()
     {
+        $gateways = Payment::getAvailableDriversForFront();
         $code = request()->query('code');
         $companion = CompanionCode::where('code', $code)->first();
         throw_unless($companion,ModelNotFoundException::class);
@@ -36,6 +38,7 @@ class CompanionController extends Controller
         }
         elseif($request->help_type == 'cash' && $request->amount){
             dd(1);
+            return $help->pay();
             //TODO: if payment is success,update column status_payment to true;
         }
         //TODO: maybe send sms to that person;

@@ -18,7 +18,14 @@ class User extends Authenticatable
      * The attributes that are mass assignable.
      */
     protected $fillable = ['name','mobile','code','national_code','status'];
+    protected $appends = [
+        'balance',
+    ];
 
+    public function getBalanceAttribute()
+    {
+        return 0;
+    }
     public function cities()
     {
         return $this->hasMany(City::class);

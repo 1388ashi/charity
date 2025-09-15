@@ -56,19 +56,4 @@ class ManuallSms {
         }
 
     }
-    public static function orderCreate($pattern, $mobile, $id, $name)
-    {
-        $smsPatternManually = [
-            "receptor" => $mobile,
-            "token" => $id,
-            "token2" => null,
-            "token3" => null,
-            "template" => $pattern,
-            "type" => null,
-            "token10" => $name,
-            "token20" => null,
-        ];
-
-        return self::execute_manually_to_kavenegar($smsPatternManually);
-    }
 }

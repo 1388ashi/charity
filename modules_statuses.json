@@ -8,5 +8,7 @@
     "Partner": true,
     "Equipment": true,
     "Report": true,
+    "Invoice": true,
+    "Setting": true,
     "Companion": true
 }
