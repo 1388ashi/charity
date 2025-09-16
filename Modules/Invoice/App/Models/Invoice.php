@@ -8,6 +8,7 @@ use Bavix\Wallet\Models\Transfer;
 use Bavix\Wallet\Traits\HasWallet;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 use Modules\Admin\App\Models\Admin;
 use Modules\Companion\App\Models\Help;
 use Modules\Core\Helpers\Helpers;
@@ -55,19 +56,19 @@ class Invoice extends Model implements ProductInterface
         });
     }
 
-    // public function getActivitylogOptions(): LogOptions
-    // {
-    //     $admin = \Auth::user() ?? Admin::query()->first();
-    //     $name = !is_null($admin->name) ? $admin->name : $admin->username;
-    //     return LogOptions::defaults()
-    //         ->useLogName('Invoice')->logAll()->logOnlyDirty()
-    //         ->setDescriptionForEvent(function($eventName) use ($name, $admin){
-    //             $eventName = Helpers::setEventNameForLog($eventName);
-    //             $causer = $admin instanceof Admin ? 'ادمین' : 'مشتری';
+    public function getActivitylogOptions(): LogOptions
+    {
+        $admin = Auth::user() ?? Admin::query()->first();
+        $name = !is_null($admin->name) ? $admin->name : $admin->username;
+        return LogOptions::defaults()
+            ->useLogName('Invoice')->logAll()->logOnlyDirty()
+            ->setDescriptionForEvent(function($eventName) use ($name, $admin){
+                $eventName = Helpers::setEventNameForLog($eventName);
+                $causer = $admin instanceof Admin ? 'ادمین' : 'مشتری';
 
-    //             return "فاکتور با شناسه {$this->id} توسط {$causer} {$name} {$eventName} شد";
-    //         });
-    // }
+                return "فاکتور با شناسه {$this->id} توسط {$causer} {$name} {$eventName} شد";
+            });
+    }
 
     public static function getAvailablePayType(): array
     {
@@ -133,18 +134,18 @@ class Invoice extends Model implements ProductInterface
     public static function getWalletPayableAmount($payable)
     {
         /** @var Help $payable */
-        $balance = $payable->user->balance;
-        if ($balance == 0){
+        // $balance = $payable->user->balance;
+        // if ($balance == 0){
             return 0;
-        }
+        // }
 
-        if ($balance >= $payable->getPayableAmount()) {
-            $payWalletAmount = $payable->getPayableAmount();
-        }else{
-            $payWalletAmount = $balance;
-        }
+        // if ($balance >= $payable->getPayableAmount()) {
+        //     $payWalletAmount = $payable->getPayableAmount();
+        // }else{
+        //     $payWalletAmount = $balance;
+        // }
 
-        return $payWalletAmount;
+        // return $payWalletAmount;
     }
 
     public function canBuy(Customer $customer, int $quantity = 1, bool $force = null): bool

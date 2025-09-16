@@ -25,7 +25,12 @@ class CompanionController extends Controller
     }
     public function pay(EquipmentHelpRequest $request)
     {
-        $help = Help::query()->create($request->validated());
+        $data = $request->validated();
+
+        if ($request->help_type != 'cash' && filled($data['amount'])) {
+            unset($data['amount']);
+        }
+        $help = Help::query()->create($data);
 
         if ($request->filled('equipments') && $request->help_type == 'objects') {
             $pivotData = collect($request->equipments)
@@ -37,9 +42,7 @@ class CompanionController extends Controller
             return redirect()->back()->with('success', 'همیاری شما با موفقیت ثبت شد ✅');
         }
         elseif($request->help_type == 'cash' && $request->amount){
-            dd(1);
             return $help->pay();
-            //TODO: if payment is success,update column status_payment to true;
         }
         //TODO: maybe send sms to that person;
     }

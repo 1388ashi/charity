@@ -11,7 +11,7 @@ use Modules\Invoice\Classes\Payable;
 
 class Help extends Payable
 {
-    protected $fillable = ['name','companion_id','type','national_code','status_payment','mobile'];
+    protected $fillable = ['name','companion_id','type','national_code','status_payment','mobile','amount'];
 
     public function equipments()
     {
@@ -39,7 +39,7 @@ class Help extends Payable
     public function onSuccessPayment(\Modules\Invoice\App\Models\Invoice $invoice)
     {
          $this->update([
-            'status' => 1,
+            'status_payment' => 1,
         ]);
         //send sms to user
         return $this->callBackViewPayment($invoice);

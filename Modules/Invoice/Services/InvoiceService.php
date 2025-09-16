@@ -22,10 +22,6 @@ class InvoiceService
         $this->payable = $payable;
     }
 
-    /**
-     * @return JsonResponse
-     * @throws LogicException|BindingResolutionException
-     */
     public function pay(PayDriver $payDriver = null)
     {
         $invoice = $this->getInvoice();
@@ -49,14 +45,18 @@ class InvoiceService
             return $this->payable->onSuccessPayment($invoice);
 //            throw new LogicException('Invoice amount can\' be zero');
         }
-        return response()->json([
-            'success' => true,
-            'message' => __('Connecting to gateway'),
-            'data' => array_merge([
-                'make_response' => $gatewayMakeResponse->getResult(),
-                'need_pay' => true
-            ], $additionalData),
-        ]);
+
+
+        return redirect()->away($gatewayMakeResponse->getResult()['url']);
+        ////////api:
+        // return response()->json([
+        //     'success' => true,
+        //     'message' => __('Connecting to gateway'),
+        //     'data' => array_merge([
+        //         'make_response' => $gatewayMakeResponse->getResult(),
+        //         'need_pay' => true
+        //     ], $additionalData),
+        // ]);
 
     }
 

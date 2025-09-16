@@ -13,6 +13,7 @@ return new class extends Migration
             $table->foreignId('companion_id')->constrained('companions')->onDelete('cascade');
             $table->enum('type', ['cash', 'objects']);
             $table->string('name');
+            $table->string('amount')->nullable();
             $table->string('national_code');
             $table->boolean('status_payment')->nullable();
             $table->string('mobile');
