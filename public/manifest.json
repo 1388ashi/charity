@@ -1,7 +1,7 @@
 {
   "name": "پنل مدیریت خیریه",
   "short_name": "پنل مدیریت",
-  "start_url": "/",
+  "start_url": "/admin",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#0d6efd",
