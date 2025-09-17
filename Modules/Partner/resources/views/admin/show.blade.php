@@ -175,5 +175,4 @@
             </div>
         </x-slot>
     </x-card>
-    @include('partner::management.includes.edit-modal')
 @endsection

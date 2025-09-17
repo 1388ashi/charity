@@ -124,7 +124,7 @@
                             <td>
                                 @include('core::includes.show-icon-button ', [
                                     'model' => $partnerGroup,
-                                    'route' => 'user.management.partners.show',
+                                    'route' => 'admin.partners.show',
                                 ])
                             </td>
                         </tr>

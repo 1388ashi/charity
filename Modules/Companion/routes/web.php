@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Modules\Companion\App\Http\Controllers\User\CompanionController as UserCompanionController;
 use Modules\Companion\App\Http\Controllers\Front\CompanionController as FrontCompanionController;
 
-Route::middleware(['web', 'auth:user'])->prefix('user')->group(function () {
+Route::middleware(['web', 'auth:user'])->name('user.')->prefix('user')->group(function () {
         Route::get('management-companions', [UserCompanionController::class,'management'])->name('management.companions');
         Route::get('companions/{city}', [UserCompanionController::class,'index'])->name('companions.index');
         Route::resource('companions', UserCompanionController::class)->except(['create','index','edit','show']);
