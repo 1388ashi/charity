@@ -2,7 +2,7 @@
     <div class="container">
         <div class="d-flex">
             <a class="animated-arrow hor-toggle horizontal-navtoggle"><span></span></a>
-            <a class="header-brand" href="index.html">
+            <a class="header-brand" href="#">
                 <img src="{{asset('assets/images/brand/favicon.png')}}" height="45px"
                         class="header-brand-img desktop-lgo" alt="Dayonelogo">
                 <img src="{{asset('assets/images/brand/favicon.png')}}"
