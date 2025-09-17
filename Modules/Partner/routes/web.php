@@ -9,10 +9,10 @@ Route::prefix('/')->name('front.')->group(function() {
     Route::get('partners/create', [FrontPartnerController::class,'create'])->name('partners.create');
     Route::post('partners/store', [FrontPartnerController::class,'store'])->name('partners.store');
 });
-Route::webSuperGroup('admin', function () {
+Route::middleware(['web', 'auth:admin'])->prefix('admin')->group(function () {
     Route::resource('partners', AdminPartnerController::class)->except(['create','store','destroy']);
 });
-Route::webSuperGroup('user', function () {
+Route::middleware(['web', 'auth:user'])->prefix('user')->group(function () {
     // Route::resource('partners', UserPartnerController::class)->except(['create','store','destroy']);
     Route::get('management-partners', [UserPartnerController::class,'management'])->name('management.partners');
     Route::get('management-partners/{partnerGroup}', [UserPartnerController::class,'show'])->name('management.partners.show');

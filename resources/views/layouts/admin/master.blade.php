@@ -19,7 +19,8 @@
     <link href="{{ asset('assets/css-rtl/style.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/css-rtl/dark.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/css-rtl/skin-modes.css') }}" rel="stylesheet">
-
+    <link rel="manifest" href="{{ asset('manifest.json') }}">
+    <meta name="theme-color" content="#0d6efd">
     <!-- Animate css -->
     <link href="{{ asset('assets/css-rtl/animated.css') }}" rel="stylesheet"/>
 
@@ -239,7 +240,18 @@ type="text/javascript"></script>
 <script src="{{ asset('assets/js/main.js') }}"></script>
 
 <script>
-            
+            if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('/service-worker.js').then(
+                    function(registration) {
+                        console.log('ServiceWorker ثبت شد: ', registration);
+                    },
+                    function(err) {
+                        console.log('ServiceWorker ثبت نشد: ', err);
+                    }
+                );
+            });
+        }
             $('#status2').select2({
             placeholder: 'انتخاب وضعیت'
         });

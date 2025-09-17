@@ -14,7 +14,7 @@ use Modules\Setting\App\Http\Controllers\Admin\SettingController;
 |
 */
 
-Route::webSuperGroup('admin', function () {
+Route::middleware(['web', 'auth:admin'])->prefix('admin')->group(function () {
     Route::get('settings', [SettingController::class, 'index'])
         ->name('settings.index');
     Route::post('settings/{group}', [SettingController::class, 'store'])

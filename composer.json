@@ -16,6 +16,7 @@
         "laravel/tinker": "^2.10.1",
         "nwidart/laravel-modules": "^12.0",
         "shetabit/payment": "^6.2",
+        "silviolleite/laravelpwa": "*",
         "spatie/eloquent-sortable": "^4.4",
         "spatie/laravel-activitylog": "^4.10",
         "spatie/laravel-medialibrary": "^11.12",

@@ -24,44 +24,43 @@ class RouteServiceProvider extends ServiceProvider
      * Define your route model bindings, pattern filters, and other route configuration.
      */
 public function boot(): void
-    {
-        RateLimiter::for('api', function (Request $request) {
-            return Limit::perMinute(60)->by($request->user()?->id ?: $request->ip());
-        });
-        Route::macro( 'webSuperGroup', function ($model, $callback, $middleware = null) {
-            $middleware = is_null($middleware) ? ['auth:' . $model] : $middleware;
+{
+    RateLimiter::for('api', function (Request $request) {
+        return Limit::perMinute(60)->by($request->user()?->id ?: $request->ip());
+    });
 
-            $attribute = [
-                'prefix' => $model,
-                'as' => $model . '.',
-//                'namespace' => ucfirst($model),
-                'middleware' => $middleware,
-            ];
+    Route::macro('webSuperGroup', function ($model, $callback, $middleware = null) {
+        $middleware = is_null($middleware) ? ['auth:' . $model] : $middleware;
 
-            Router::group($attribute , $callback);
-        });
+        $attribute = [
+            'prefix' => $model,
+            'as' => $model . '.',
+            'middleware' => $middleware,
+        ];
 
-        Route::macro( 'superGroup', function ($model, $callback, $middleware = null) {
-            $middleware = is_null($middleware) ? ['auth:' . $model . '-api'] : $middleware;
+        Route::group($attribute, $callback);
+    });
 
-            $attribute = [
-                'prefix' => $model,
-                'as' => $model . '.',
-                'namespace' => ucfirst($model),
-                'middleware' => $middleware,
-            ];
+    Route::macro('superGroup', function ($model, $callback, $middleware = null) {
+        $middleware = is_null($middleware) ? ['auth:' . $model . '-api'] : $middleware;
 
-            Router::group($attribute , $callback);
-        });
+        $attribute = [
+            'prefix' => $model,
+            'as' => $model . '.',
+            'namespace' => ucfirst($model),
+            'middleware' => $middleware,
+        ];
 
+        Route::group($attribute, $callback);
+    });
 
-        $this->routes(function () {
-            Route::middleware('api')
-                ->prefix('api')
-                ->group(base_path('routes/api.php'));
+    $this->routes(function () {
+        Route::middleware('api')
+            ->prefix('api')
+            ->group(base_path('routes/api.php'));
 
-            Route::middleware('web')
-                ->group(base_path('routes/web.php'));
-        });
-    }
+        Route::middleware('web')
+            ->group(base_path('routes/web.php'));
+    });
+}
 }
