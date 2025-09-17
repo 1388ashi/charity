@@ -41,7 +41,6 @@
                         </div>
                     @endforeach
                 </div>
-
             </div>
             <x-table-component>
                 <x-slot name="tableTh">

@@ -74,7 +74,7 @@
             <x-table-component>
                 <x-slot name="tableTh">
                     <tr>
-                        @php($tableTh = ['ردیف', 'نام شهر','کاربر', 'وضعیت', 'تاریخ به روزرسانی', 'عملیات'])
+                        @php($tableTh = ['ردیف', 'نام شهر','کارشناس', 'وضعیت', 'تاریخ به روزرسانی', 'عملیات'])
                         @foreach ($tableTh as $th)
                             <th>{{ $th }}</th>
                         @endforeach
