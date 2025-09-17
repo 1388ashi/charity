@@ -2,7 +2,16 @@
     <div class="container">
         <div class="d-flex">
             <a class="animated-arrow hor-toggle horizontal-navtoggle"><span></span></a>
-           
+            <a class="header-brand" href="#">
+                <img src="{{asset('assets/images/brand/favicon.png')}}" height="45px"
+                        class="header-brand-img desktop-lgo" alt="Dayonelogo">
+                <img src="{{asset('assets/images/brand/favicon.png')}}"
+                        class="header-brand-img dark-logo" alt="Dayonelogo">
+                <img src="{{asset('assets/images/brand/favicon.png')}}"
+                        class="header-brand-img mobile-logo" alt="Dayonelogo" style="height: 45px">
+                <img src="{{asset('assets/images/brand/favicon.png')}}"
+                        class="header-brand-img darkmobile-logo" alt="Dayonelogo">
+            </a>
             <div class="d-flex order-lg-2 my-auto mr-auto">
                 <div class="dropdown header-fullscreen">
                     <a class="nav-link icon full-screen-link">
