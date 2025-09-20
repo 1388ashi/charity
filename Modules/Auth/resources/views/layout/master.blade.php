@@ -6,7 +6,7 @@
     <meta name='viewport' content='width=device-width, initial-scale=1.0, user-scalable=0'>
 
     <!-- Title -->
-    <title>ورود به {{ config('app.name') }}</title>
+    <title>ورود به پنل مدیریت</title>
 
     <!--Favicon -->
     <link rel="icon" href="{{ asset('assets/images/brand/favicon.ico') }}" type="image/x-icon"/>
