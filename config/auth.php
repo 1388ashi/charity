@@ -48,6 +48,14 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        'help_user' => [
+            'driver' => 'session',
+            'provider' => 'help_users',
+        ],
+        'companion' => [
+            'driver' => 'session',
+            'provider' => 'companions',
+        ],
     ],
 
     /*
@@ -75,6 +83,14 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => env('AUTH_MODEL', \Modules\User\App\Models\User::class),
+        ],
+        'help_users' => [
+            'driver' => 'eloquent',
+            'model' => env('AUTH_MODEL', \Modules\Companion\App\Models\HelpUser::class),
+        ],
+        'companions' => [
+            'driver' => 'eloquent',
+            'model' => env('AUTH_MODEL', \Modules\Companion\App\Models\Companion::class),
         ],
     ],
 

@@ -11,13 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('companions', function (Blueprint $table) {
+        Schema::create('help_users', function (Blueprint $table) {
             $table->id();
+            $table->string('mobile');
             $table->string('name');
             $table->string('national_code');
-            $table->string('mobile');
             $table->string('code')->nullable();
-            $table->foreignId('city_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -27,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('companions');
+        Schema::dropIfExists('help_users');
     }
 };

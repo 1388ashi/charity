@@ -11,12 +11,10 @@ return new class extends Migration
         Schema::create('helps', function (Blueprint $table) {
             $table->id();
             $table->foreignId('companion_id')->constrained('companions')->onDelete('cascade');
+            $table->foreignId('help_user_id')->constrained('help_users')->onDelete('cascade');
             $table->enum('type', ['cash', 'objects']);
-            $table->string('name');
             $table->string('amount')->nullable();
-            $table->string('national_code');
             $table->boolean('status_payment')->nullable();
-            $table->string('mobile');
             $table->timestamps();
         });
     }
