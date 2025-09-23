@@ -26,7 +26,7 @@
                                             @enderror
                                         </div>
                                         <div class="submit">
-                                            <button class="btn btn-primary btn-block" type="submit">ورود</button>
+                                            <button class="btn btn-primary btn-block" type="submit">دریافت کد تایید</button>
                                         </div>
                                     </form>
                                     <div class="card-body border-top-0 pb-6 pt-2">

@@ -51,8 +51,6 @@ class AuthController extends Controller
 
     public function login(Request $request): \Illuminate\Http\RedirectResponse
     {
-        // $request->smsToken->verified_at = now();
-        // $request->smsToken->save();
         $mobile = $request->input('mobile');
         $user = User::where('mobile', $mobile)->first();
         

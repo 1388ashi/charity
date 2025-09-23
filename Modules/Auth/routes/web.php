@@ -34,6 +34,6 @@ Route::middleware(['web', 'auth:companion'])->name('companion.')->prefix('compan
 Route::get('help-user/login', [HelpUserAuthController::class, 'showLoginForm'])->name('help-user.login.form');
 Route::post('help-user/login', [HelpUserAuthController::class, 'login'])->name('help-user.login');
 
-Route::middleware(['web', 'auth:companion'])->name('help-user.')->prefix('help-user')->group(function () {
+Route::middleware(['web', 'auth:help_user'])->name('help-user.')->prefix('help-user')->group(function () {
     Route::post('logout', [HelpUserAuthController::class, 'logout'])->name('logout');
 });

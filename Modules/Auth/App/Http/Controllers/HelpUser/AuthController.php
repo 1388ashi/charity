@@ -2,13 +2,17 @@
 
 namespace Modules\Auth\App\Http\Controllers\HelpUser;
 
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Modules\Companion\App\Models\helpUser;
 
 class AuthController extends Controller
 {
     public function showLoginForm($mobile = null,$code = null)
     {
         $code = request()->query('code');
-        if (auth()->guard('help_user')->user())
+        if (auth('help_user')->user())
         {
             return redirect()->to('/help-user?code=' . urlencode($code));
         }
@@ -48,22 +52,13 @@ class AuthController extends Controller
 
     public function login(Request $request): \Illuminate\Http\RedirectResponse
     {
-        // $request->smsToken->verified_at = now();
-        // $request->smsToken->save();
         $mobile = $request->input('mobile');
-        $user = User::where('mobile', $mobile)->first();
+        $code = $request->input('code');
+        $user = HelpUser::firstOrCreate(['mobile' => $mobile],['mobile' => $mobile]);
+        Auth::guard('help_user')->login($user);
+        $request->session()->regenerate();
         
-        if ($user) {
-            Auth::guard('user')->login($user);
-
-            $request->session()->regenerate();
-            
-            return redirect()->intended('user');
-        }
-
-        return back()->withErrors([
-            'mobile' => 'شماره موبایل معتبر نیست!',
-        ]);
+        return redirect()->intended('help-user?code=' . urlencode($code));   
     }
 
     public function logout(Request $request): \Illuminate\Http\RedirectResponse
@@ -72,6 +67,6 @@ class AuthController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect()->route('user.login.form');
+        return redirect()->route('help-user.login.form');
     }
 }

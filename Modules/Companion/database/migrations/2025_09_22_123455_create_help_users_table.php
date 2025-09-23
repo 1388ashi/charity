@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('help_users', function (Blueprint $table) {
             $table->id();
             $table->string('mobile');
-            $table->string('name');
-            $table->string('national_code');
+            $table->string('name')->nullable();
+            $table->string('national_code')->nullable();
             $table->string('code')->nullable();
             $table->timestamps();
         });
