@@ -4,53 +4,45 @@ namespace Modules\Auth\App\Http\Controllers\Companion;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Modules\Companion\App\Models\Companion;
 
 class AuthController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function showLoginForm($mobile = null)
     {
-        return view('auth::index');
+        if (auth()->guard('companion')->user())
+        {
+            return redirect('companion');
+        }
+
+        return view('auth::companion.login',compact('mobile'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function login(Request $request): \Illuminate\Http\RedirectResponse
     {
-        return view('auth::create');
+        $mobile = $request->input('mobile');
+        $companion = Companion::where('mobile', $mobile)->first();
+        
+        if ($companion) {
+            Auth::guard('companion')->login($companion);
+
+            $request->session()->regenerate();
+            
+            return redirect()->intended('companion');
+        }
+
+        return back()->withErrors([
+            'mobile' => 'شماره موبایل معتبر نیست!',
+        ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request) {}
-
-    /**
-     * Show the specified resource.
-     */
-    public function show($id)
+    public function logout(Request $request): \Illuminate\Http\RedirectResponse
     {
-        return view('auth::show');
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect()->route('companion.login.form');
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit($id)
-    {
-        return view('auth::edit');
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, $id) {}
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy($id) {}
 }

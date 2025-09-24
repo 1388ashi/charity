@@ -266,41 +266,7 @@ type="text/javascript"></script>
             $(this).removeClass('inactive').addClass('test');
         });
 
-        $(document).ready(function() {
-
-            const statusSelectBox = $('#status2');
-            const $outputInput = $('#output');
-            const checkAll = $('#check_all');
-
-            statusSelectBox.on('change', function() {
-                let selectedValue = statusSelectBox.val();
-                $outputInput.val(selectedValue);
-                console.log('Selected value: ' + selectedValue);
-            });
-
-            checkAll.on('click', function(e) {
-                if ($(this).is(':checked', true)) {
-                    $(".checkbox").attr('checked', true);
-                } else {
-                    $(".checkbox").attr('checked', false);
-                }
-            });
-
-            checkAll.click(() => {
-                $('#buttonsRow').toggleClass('hidden');
-                $('#buttonsRow').toggleClass('add');
-            });
-
-            $('.toggleCheckbox').on('click', function() {
-                const anyChecked = $('.toggleCheckbox:checked').length > 0;
-
-                if (anyChecked) {
-                    $('#buttonsRow').removeClass('hidden').addClass('add');
-                } else {
-                    $('#buttonsRow').addClass('hidden').removeClass('add');
-                }
-            });
-        });
+   
 
         document.querySelectorAll('.status-btn').forEach(item => {
             item.addEventListener('click', event => {

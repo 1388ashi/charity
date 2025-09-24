@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Modules\Companion\App\Http\Controllers\HelpUser\HelpUserController;
+use Modules\Companion\App\Http\Controllers\Companion\CompanionController as CompanionController;
 use Modules\Companion\App\Http\Controllers\User\CompanionController as UserCompanionController;
 use Modules\Companion\App\Http\Controllers\Front\CompanionController as FrontCompanionController;
 
@@ -15,4 +16,7 @@ Route::middleware(['web', 'auth:help_user'])->prefix('help-user')->group(functio
     Route::put('/{helpUser}', [HelpUserController::class,'update'])->name('help-user.update');
     Route::get('/companions', [HelpUserController::class,'helpPage'])->name('help-user.help-page');
     Route::post('companions/pay', [HelpUserController::class,'pay'])->name('help-user.pay');
+});
+Route::middleware(['web', 'auth:companion'])->name('companion.')->prefix('companion')->group(function () {
+    Route::get('/help-users', [CompanionController::class,'index'])->name('help-user.index');
 });

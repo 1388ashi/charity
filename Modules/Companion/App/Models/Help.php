@@ -4,7 +4,7 @@ namespace Modules\Companion\App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Modules\Companion\Models\helpUser;
+use Modules\Companion\App\Models\helpUser;
 use Modules\Equipment\App\Models\Equipment;
 use Modules\Invoice\Classes\Payable;
 
@@ -22,6 +22,10 @@ class Help extends Payable
     {
         return $this->belongsTo(HelpUser::class,'help_user_id');
     }
+    public function companion()
+    {
+        return $this->belongsTo(Companion::class);
+    }
     public function isPayable()
     {
         return $this->status == 0;
@@ -30,6 +34,18 @@ class Help extends Payable
     public function getPayableAmount()
     {
         return $this->amount;
+    }
+    public function scopeFilters($q){
+       return $q        
+        ->when(request('name'), function ($q) {
+            $q->where('name', 'like', '%' . request('name') . '%');
+        })
+        ->when(request('start_date'), function ($q) {
+            $q->whereDate('created_at', '>=', request('start_date'));
+        })
+        ->when(request('end_date'), function ($q) {
+            $q->whereDate('created_at', '<=', request('end_date'));
+        });
     }
      public function callBackViewPayment($invoice): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {

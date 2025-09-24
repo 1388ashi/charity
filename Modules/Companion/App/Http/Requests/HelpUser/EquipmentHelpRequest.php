@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Companion\App\Http\Requests\Front;
+namespace Modules\Companion\App\Http\Requests\HelpUser;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -11,11 +11,8 @@ class EquipmentHelpRequest extends FormRequest
 
         return [
             //general
-            'name' => 'required|string',
-            'national_code' => 'required|string|digits:10|unique:helps,national_code',
-            'mobile' => 'required|string|digits:11|unique:helps,mobile',
-            'help_type' => 'required|in:cash,objects',
-            'companion_id' => 'required|integer|exists:companions,id',
+            'type' => 'required|in:cash,objects',
+            'companion_id' => 'nullable|integer|exists:companions,id',
             'amount' => 'nullable|integer|min:1000000',
 
             //equipments

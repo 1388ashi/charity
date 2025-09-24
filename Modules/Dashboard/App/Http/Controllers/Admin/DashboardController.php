@@ -16,7 +16,8 @@ class DashboardController extends Controller
             ])
             ->where('status', PartnerGroup::STATUS_NEW)
             ->latest('id')
-            ->paginate(20);
+            ->take(15)
+            ->get();
 
         return view('dashboard::admin.index', compact('partnerGroups'));
     }

@@ -20,10 +20,10 @@
                     </a>
                 </div>
                 <div class="dropdown header-fullscreen">
-                    <form method="POST" action="{{ route('help-user.logout') }}">
+                    <form method="POST" action="{{ route('companion.logout') }}">
                         @csrf
                         <button style="border: none; display: flex; justify-content: center; align-items: center;"
-                            title="خروج" class="nav-link icon full-screen-logout">
+                            title="خروج" class="nav-link icon full-screen-link">
                             <i class="feather feather-power fs-16"></i>
                         </button>
                     </form>
@@ -31,5 +31,4 @@
             </div>
         </div>
     </div>
-
 </div>

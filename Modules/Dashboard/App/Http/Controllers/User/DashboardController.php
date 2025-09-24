@@ -26,7 +26,7 @@ class DashboardController extends Controller
                 });
             })
             ->latest('id')
-            ->paginate(20);
+            ->get();
 
         return view('dashboard::user.index', compact('partnerGroups'));
     }

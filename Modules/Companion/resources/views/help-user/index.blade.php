@@ -1,7 +1,6 @@
 @extends('layouts.help-user.master')
 @section('content')
     <div class="page-header">
-        <x-breadcrumb :items="[['title' => 'اطلاعات کاربری']]" />
         <x-create-button route="help-user.help-page" :routeParams="['code' => $code]"  title="کمک جدید" />
     </div>
 
@@ -63,13 +62,15 @@
                     @forelse ($helps as $item)
                         <tr>
                             <td class="font-weight-bold">{{ $loop->iteration }}</td>
-                            <td>{{ $item->companion->name  }}</td>
-                            @if ($item->type == 'cash')
-                                <td>{{ number_format($item->amount) }}</td>
-                            @else
-                                <td>--</td>
-                            @endif
-                            <td>{{ verta($companion->created_at)->format('Y/m/d H:i') }}</td>
+                            <td>{{ $item->companion ? $item->companion->name . '-' . $item->companion->mobile : 'آزاد' }}</td>
+                            <td>
+                                @if ($item->type == 'cash')
+                                    نقدی ({{ number_format($item->amount) }} تومن)
+                                @else
+                                    تجهیزات: <span class="font-weight-bold">{{ $item->equipments->pluck('name')->join(', ') }}</span> 
+                                @endif
+                            </td>
+                            <td>{{ verta($item->created_at)->format('Y/m/d H:i') }}</td>
                         </tr>
                     @empty
                         @include('core::includes.data-not-found-alert', ['colspan' => 5])

@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Title -->
-    <title>پنل مدیریت</title>
+    <title>پنل همیار</title>
 
     <!--Favicon -->
     <link rel="icon" href="{{asset('assets/images/brand/favicon.ico')}}" type="image/x-icon"/>
@@ -19,8 +19,6 @@
     <link href="{{ asset('assets/css-rtl/style.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/css-rtl/dark.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/css-rtl/skin-modes.css') }}" rel="stylesheet">
-
-    <!-- Animate css -->
     <link href="{{ asset('assets/css-rtl/animated.css') }}" rel="stylesheet"/>
 
     <!--Sidemenu css -->
@@ -61,7 +59,7 @@
 
     <!-- PersianDateTimePicker css -->
     <link rel="stylesheet"
-        href="{{asset('assets/PersianDateTimePicker-bs4/src/jquery.md.bootstrap.datetimepicker.style.css')}}"/>
+        href="{{asset('assets\PersianDateTimePicker-bs4/src/jquery.md.bootstrap.datetimepicker.style.css')}}"/>
 
 
     <link href="{{ asset('assets/css-rtl/style-rtl.css') }}" rel="stylesheet"/>
@@ -110,8 +108,8 @@
 
     <div class="page">
         <div class="page-main">
-            @include('layouts.user.navbar')
-            @include('layouts.user.menu')
+            @include('layouts.companion.navbar')
+            @include('layouts.companion.menu')
 
             <div class="main-content" style="padding: 20px;">
 
@@ -120,7 +118,7 @@
             </div>
         </div>
 
-    @include('layouts.user.footer')
+    @include('layouts.companion.footer')
     </div>
 
 
@@ -194,7 +192,7 @@
 <!-- Summernote js  -->
 <script src="{{ asset('assets/plugins/summernote/summernote-bs4.js') }}"></script>
 <!-- PersianDateTimePicker js -->
-<script src="{{asset('assets/PersianDateTimePicker-bs4/src/jquery.md.bootstrap.datetimepicker.js')}}"
+<script src="{{asset('assets\PersianDateTimePicker-bs4/src/jquery.md.bootstrap.datetimepicker.js')}}"
 type="text/javascript"></script>
 <script src="{{ asset('assets/plugins/ckeditor/ckeditor.js') }}"></script>
 
@@ -237,5 +235,6 @@ type="text/javascript"></script>
 
 <script src="{{ asset('assets/plugins/notify/js/jquery.growl.js') }}"></script>
 <script src="{{ asset('assets/js/main.js') }}"></script>
+
 </body>
 </html>

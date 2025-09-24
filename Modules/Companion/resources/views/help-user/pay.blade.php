@@ -14,6 +14,9 @@
         button {
             all: unset;
         }
+        .full-screen-logout{
+            all: revert;
+        }
         .filter-btn-form button {
             padding: 6px 50px;
             border-radius: 8px;
@@ -65,104 +68,74 @@
     </style>
 @endsection
 @section('content')
-    <div class="page-header">
-        <x-breadcrumb :items="[['title' => 'ثبت کمک جدید']]" />
-    </div>
-  
+
     <div class="d-flex justify-content-around">
         <b style="font-size: 20px">فرم کمک همیاران</b>
-        <img class="" src="{{asset('assets/images/brand/favicon.png')}}" height="45px">
     </div>
     <br>
-   <div class="d-flex justify-content-center align-items-center">
-    <div class="card card-custom shadow-sm col-12 col-md-10 col-lg-8 p-4">
-        <div class="card-body">
-            @include('components.errors')
+    <div class="d-flex justify-content-center align-items-center">
+        <div class="help-box card card-custom shadow-sm col-12 col-md-10 col-lg-8 p-4">
+            <div class="card-body">
+                @include('components.errors')
 
-            <form id="storeHelp" action="{{ route('help-user.pay') }}" method="POST">
-                @csrf
-                <input type="hidden" id="helpType" name="help_type" value="cash">
-                <input type="hidden" name="companion_id" value="{{ $code ? $companion->id : null }}">
+                <form id="storeHelp" action="{{ route('help-user.pay') }}" method="POST">
+                    @csrf
+                    <input type="hidden" id="helpType" name="type" value="cash">
+                    <input type="hidden" name="companion_id" value="{{ $code ? $companion->id : null }}">
 
-                <div class="row mb-3">
-                    <div class="col-12 col-md-4 mb-3 mb-md-0">
-                        <div class="form-group">
-                            <label for="name" class="control-label">نام و نام خانوادگی <span class="text-danger">&starf;</span></label>
-                            <input type="text" name="name" value="{{ old('name') }}" class="form-control" id="name"
-                                   placeholder="نام و نام خانوادگی خود را اینجا وارد کنید..." required autofocus>
-                        </div>
+                    <div class="d-flex justify-content-center filter-btn-form my-4">
+                        <button type="button" id="btn-cash" class="active-btn btn-filter ml-3" onclick="setStepForm('cash')">کمک مالی</button>
+                        <button type="button" id="btn-objects" class="btn-filter" onclick="setStepForm('objects')">اهدا تجهیزات</button>
                     </div>
 
-                    <div class="col-12 col-md-4 mb-3 mb-md-0">
-                        <div class="form-group">
-                            <label for="national_code" class="control-label">کد ملی <span class="text-danger">&starf;</span></label>
-                            <input type="text" name="national_code" value="{{ old('national_code') }}" class="form-control" id="national_code"
-                                   placeholder="کد ملی خود را اینجا وارد کنید..." required>
-                        </div>
-                    </div>
-
-                    <div class="col-12 col-md-4">
-                        <div class="form-group">
-                            <label for="mobile" class="control-label">شماره موبایل <span class="text-danger">&starf;</span></label>
-                            <input type="text" name="mobile" value="{{ old('mobile') }}" class="form-control" id="mobile"
-                                   placeholder="شماره موبایل خود را اینجا وارد کنید..." required>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="d-flex justify-content-center filter-btn-form my-4">
-                    <button type="button" id="btn-cash" class="active-btn btn-filter ml-3" onclick="setStepForm('cash')">کمک مالی</button>
-                    <button type="button" id="btn-objects" class="btn-filter" onclick="setStepForm('objects')">اهدا تجهیزات</button>
-                </div>
-
-                <div id="cash">
-                    <h4>کمک مالی:</h4>
-                    <div class="row mb-3 p-3">
-                        <div class="col-12 d-flex align-items-center">
-                            <input type="range" class="form-control w-75" id="donationRange" min="1000000" max="100000000" step="1000000"
-                                   value="1000000" name="amount" oninput="updateDonationValue(this.value)">
-                            <p class="mt-2 mr-2 mb-0">مبلغ انتخابی: <span id="donationValue">1,000,000</span> تومان</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="objects" class="close">
-                    <h4>اهدا تجهیزات:</h4>
-                    @if(count($equipments) != 0)
+                    <div id="cash">
+                        <h4>کمک مالی:</h4>
                         <div class="row mb-3 p-3">
-                            @foreach($equipments as $equipment)
-                                <div class="col-6 col-md-3 mb-3">
-                                    <div class="card border border-black shadow-sm p-2 text-center">
-                                        <h6 class="mb-2">{{ $equipment->name }}</h6>
-                                        <div class="d-flex justify-content-center align-items-center">
-                                            <button type="button"
-                                                    class="btn btn-outline-danger btn-sm btn-icon mx-1 qty-btn"
-                                                    data-id="{{ $equipment->id }}"
-                                                    data-action="decrease">-</button>
-                                            <span id="qty-display-{{ $equipment->id }}" class="mx-2">0</span>
-                                            <button type="button"
-                                                    class="btn btn-outline-success btn-sm btn-icon mx-1 qty-btn"
-                                                    data-id="{{ $equipment->id }}"
-                                                    data-action="increase">+</button>
+                            <div class="col-12 d-flex align-items-center">
+                                <input type="range" class="form-control w-75" id="donationRange" min="1000000" max="100000000" step="1000000"
+                                    value="1000000" name="amount" oninput="updateDonationValue(this.value)">
+                                <p class="mt-2 mr-2 mb-0">مبلغ انتخابی: <span id="donationValue">1,000,000</span> تومان</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="objects" class="close">
+                        <h4>اهدا تجهیزات:</h4>
+                        @if(count($equipments) != 0)
+                            <div class="row mb-3 p-3">
+                                @foreach($equipments as $equipment)
+                                    <div class="col-6 col-md-3 mb-3">
+                                        <div class="card border border-black shadow-sm p-2 text-center">
+                                            <h6 class="mb-2">{{ $equipment->name }}</h6>
+                                            <div class="d-flex justify-content-center align-items-center">
+                                                <button type="button"
+                                                        class="btn btn-outline-danger btn-sm btn-icon mx-1 qty-btn"
+                                                        data-id="{{ $equipment->id }}"
+                                                        data-action="decrease">-</button>
+                                                <span id="qty-display-{{ $equipment->id }}" class="mx-2">0</span>
+                                                <button type="button"
+                                                        class="btn btn-outline-success btn-sm btn-icon mx-1 qty-btn"
+                                                        data-id="{{ $equipment->id }}"
+                                                        data-action="increase">+</button>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            @endforeach
-                        </div>
-                    @endif
-                    <div id="selectedEquipments"></div>
-                </div>
+                                @endforeach
+                            </div>
+                        @endif
+                        <div id="selectedEquipments"></div>
+                    </div>
 
-                <div class="text-center mt-4">
-                    <button id="submitBtn" type="submit" class="btn btn-success px-4">
-                        ثبت اطلاعات
-                        <i class="fa fa-hand-o-up text-white mt-1 mr-1"></i>
-                    </button>
-                </div>
-            </form>
+                    <div class="text-center mt-4">
+                        <button id="submitBtn" type="submit" class="btn btn-success px-4">
+                            ثبت اطلاعات
+                            <i class="fa fa-hand-o-up text-white mt-1 mr-1"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
-</div>
 
 @endsection
 @section('scripts')

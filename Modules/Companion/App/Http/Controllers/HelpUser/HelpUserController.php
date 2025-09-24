@@ -5,7 +5,7 @@ namespace Modules\Companion\App\Http\Controllers\HelpUser;
 use App\Http\Controllers\Controller;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
-use Modules\Companion\App\Http\Requests\Front\EquipmentHelpRequest;
+use Modules\Companion\App\Http\Requests\HelpUser\EquipmentHelpRequest;
 use Modules\Companion\App\Http\Requests\HelpUser\UpdateRequest;
 use Modules\Companion\App\Models\CompanionCode;
 use Modules\Companion\App\Models\Help;
@@ -17,9 +17,10 @@ class HelpUserController extends Controller
 {
     public function index()
     {
+
         $code = request('code');
         $user = auth('help_user')->user();
-        $helps = Help::with('companion:id,name')->where('help_user_id',$user->id)->get();
+        $helps = Help::with('companion:id,name,mobile','equipments:id,name')->latest()->where('help_user_id',$user->id)->get();
 
         return view('companion::help-user.index',compact('code','user','helps'));
     }
@@ -43,22 +44,23 @@ class HelpUserController extends Controller
     public function pay(EquipmentHelpRequest $request)
     {
         $data = $request->validated();
-
-        if ($request->help_type != 'cash' && filled($data['amount'])) {
+        $data['help_user_id'] = auth('help_user')->user()->id;
+        if ($request->type != 'cash' && filled($data['amount'])) {
             unset($data['amount']);
         }
         $help = Help::query()->create($data);
 
-        if ($request->filled('equipments') && $request->help_type == 'objects') {
+        if ($request->filled('equipments') && $request->type == 'objects') {
             $pivotData = collect($request->equipments)
                 ->mapWithKeys(fn ($eq) => [
                     $eq['id'] => ['quantity' => $eq['quantity']]
                 ])
                 ->toArray();
             $help->equipments()->attach($pivotData);
-            return redirect()->back()->with('success', 'همیاری شما با موفقیت ثبت شد ✅');
+            //go to list
+            return redirect()->to('/help-user?code=' . urlencode($request->code ?? ''))->with('success', 'همیاری شما با موفقیت ثبت شد ✅');
         }
-        elseif($request->help_type == 'cash' && $request->amount){
+        elseif($request->type == 'cash' && $request->amount){
             return $help->pay();
         }
         //TODO: maybe send sms to that person;
