@@ -10,7 +10,7 @@
                     <div class="row">
                         <div class="col-lg-4">
                             <div class="form-group">
-                                <input class="form-control" type="text" placeholder="نام هامی" name="name" value="{{ old('name') }}"/>
+                                <input class="form-control" type="text" placeholder="نام هامی" name="name" value="{{ request('name') }}"/>
                             </div>
                         </div>
                         <div class="col-lg-4">

@@ -36,9 +36,13 @@ class Help extends Payable
         return $this->amount;
     }
     public function scopeFilters($q){
+       $name = request('name');
+
        return $q        
-        ->when(request('name'), function ($q) {
-            $q->where('name', 'like', '%' . request('name') . '%');
+        ->when($name, function ($q) use($name) {
+            $q->whereHas('helpUser',function ($q) use ($name) {
+                    $q->where('name', 'like', '%' . $name . '%');
+                });
         })
         ->when(request('start_date'), function ($q) {
             $q->whereDate('created_at', '>=', request('start_date'));
