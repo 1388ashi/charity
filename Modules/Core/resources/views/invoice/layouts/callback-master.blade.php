@@ -171,9 +171,9 @@
             <div class="relative">
                 <span class="opacity-0 sm:rounded-t-2xl sm:text-sm sm:opacity-100 sm:bg-gray-100 p-1.5">نتیجه پرداخت</span>
                 @if(@isset($invoice))
-                    <a href="{{env('APP_URL_FRONT','http://127.0.0.1:8000/help-user')}}"></a>
+                    <a href="{{env('APP_URL_FRONT','https://help-married.alochand.com/help-user')}}"></a>
                 @else
-                    <a href="{{env('APP_URL_FRONT','http://127.0.0.1:8000/help-user')}}"
+                    <a href="{{env('APP_URL_FRONT','https://help-married.alochand.com/help-user')}}"
                         class="back-to-web hover:bg-green-200 hover:text-green-700 absolute inset-y-0 left-0 px-5 rounded-t-2xl text-green-500 text-sm">
                         بازگشت به وبسایت
                     </a>
