@@ -46,7 +46,6 @@ class Help extends Payable
         $todayTotal = Help::where('type', 'cash')
             ->whereDate('created_at', Carbon::today())
             ->sum('amount');
-dd(1);
 
         $weekTotal = Help::where('type', 'cash')
             ->whereBetween('created_at', [Carbon::now()->subWeek()->startOfDay(), Carbon::now()->endOfDay()])
