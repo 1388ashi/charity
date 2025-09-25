@@ -1,16 +1,24 @@
-@extends('layouts.companion.master')
+@extends('layouts.user.master')
 @section('content')
+    <div class="page-header">
+        <x-breadcrumb :items="[['title' => 'گزارش همیاران']]" />
+    </div>
 
-  <x-card>
+    <x-card>
         <x-slot name="cardTitle">جستجوی پیشرفته</x-slot>
         <x-slot name="cardOptions"><x-card-options /></x-slot>
         <x-slot name="cardBody">
             <div class="row">
-                <form action="{{ route('companion.help-user.index') }}" method="GET" class="col-12">
+                <form action="{{ route('user.reports.companions-filter-by-city',$city->id) }}" method="GET" class="col-12">
                     <div class="row">
                         <div class="col-lg-4">
                             <div class="form-group">
-                                <input class="form-control" type="text" placeholder="نام حامی" name="name" value="{{ request('name') }}"/>
+                                <select id="companionId" name="companion_id" class="form-control select2">
+                                    <option value="" disabled selected>-- همیار را انتخاب کنید --</option>
+                                    @foreach ($companions as $companion)
+                                    <option value="{{ $companion->id }}" {{ request('companion_id') == $companion->id ? 'selected' : null }}>{{ $companion->name }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
                         <div class="col-lg-4">
@@ -36,7 +44,7 @@
                                     class="fa fa-search"></i></button>
                         </div>
                         <div class="col-xl-3 col-lg-4 col-md-6 col-12">
-                            <a href="{{ route('companion.help-user.index') }}" class="btn btn-danger btn-sm btn-block">حذف همه فیلتر ها
+                            <a href="{{ route('user.reports.companions-filter-by-city',$city->id) }}" class="btn btn-danger btn-sm btn-block">حذف همه فیلتر ها
                                 <i class="fa fa-close"></i></a>
                         </div>
                     </div>
@@ -46,13 +54,18 @@
     </x-card>
 
     <x-card>
-        <x-slot name="cardTitle">لیست کمک ها</x-slot>
+        <x-slot name="cardTitle">لیست کمک های شهر {{ $city->name }}</x-slot>
+        {{-- //اسم کارشناس --}}
         <x-slot name="cardOptions"><x-card-options /></x-slot>
         <x-slot name="cardBody">
+            <div class="">
+                <span>کارشناس شهر :</span>
+                <span class="font-weight-bold">{{ $city->user->name }}</span>
+            </div>
             <x-table-component>
                 <x-slot name="tableTh">
                     <tr>
-                        @php($tableTh = ['ردیف', 'حامی','شماره تماس','نوع کمک','تاریخ ثبت'])
+                        @php($tableTh = ['ردیف','همیار','کمک کننده','نوع کمک','تاریخ ثبت'])
                         @foreach ($tableTh as $th)
                             <th>{{ $th }}</th>
                         @endforeach
@@ -62,8 +75,8 @@
                     @forelse ($helps as $item)
                         <tr>
                             <td class="font-weight-bold">{{ $loop->iteration }}</td>
-                            <td>{{ $item->helpUser->name }}</td>
-                            <td>{{ $item->helpUser->mobile }}</td>
+                            <td>{{ $item->companion ? $item->companion->name . ' - ' . $item->companion->mobile : 'آزاد(بدون همیار)' }}</td>
+                            <td>{{ $item->helpUser->name . ' - ' . $item->helpUser->mobile }}</td>
                             <td>
                                 @if ($item->type == 'cash')
                                     نقدی ({{ number_format($item->amount) }} تومن)
@@ -100,4 +113,9 @@
         'dateInputId' => 'end_date_hide',
         'textInputId' => 'end_date_show',
     ])
+     <script>
+        $('#companionId').select2({
+            placeholder: 'انتخاب همیار'
+        });
+    </script>
 @endsection

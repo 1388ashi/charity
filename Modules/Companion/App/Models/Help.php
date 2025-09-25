@@ -2,6 +2,7 @@
 
 namespace Modules\Companion\App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Modules\Companion\App\Models\helpUser;
@@ -35,21 +36,71 @@ class Help extends Payable
     {
         return $this->amount;
     }
-    public function scopeFilters($q){
-       $name = request('name');
+    public static function getHelpData()
+    {
+        $helps = Help::with('helpUser:id,name,mobile','companion:id,name,city_id','companion.city:id,name','equipments:id,name')
+            ->latest()
+            ->take(10)
+            ->get();
+        
+        $todayTotal = Help::where('type', 'cash')
+            ->whereDate('created_at', Carbon::today())
+            ->sum('amount');
 
-       return $q        
-        ->when($name, function ($q) use($name) {
-            $q->whereHas('helpUser',function ($q) use ($name) {
-                    $q->where('name', 'like', '%' . $name . '%');
-                });
-        })
-        ->when(request('start_date'), function ($q) {
-            $q->whereDate('created_at', '>=', request('start_date'));
-        })
-        ->when(request('end_date'), function ($q) {
-            $q->whereDate('created_at', '<=', request('end_date'));
-        });
+        $weekTotal = Help::where('type', 'cash')
+            ->whereBetween('created_at', [Carbon::now()->subWeek()->startOfDay(), Carbon::now()->endOfDay()])
+            ->sum('amount');
+
+        $monthTotal = Help::where('type', 'cash')
+            ->whereBetween('created_at', [Carbon::now()->subMonth()->startOfDay(), Carbon::now()->endOfDay()])
+            ->sum('amount');
+        
+        $allTotal = Help::where('type', 'cash')
+            ->sum('amount');
+
+        return [
+            'helps'      => $helps,
+            'todayTotal' => $todayTotal,
+            'weekTotal'  => $weekTotal,
+            'monthTotal' => $monthTotal,
+            'allTotal'   => $allTotal,
+        ];
+    }
+    public function scopeFilters($q){
+        $name = request('name');
+        $start_date = request('start_date');
+        $end_date = request('end_date');
+
+        return $q        
+            ->when($name, function ($q) use($name) {
+                $q->whereHas('helpUser',function ($q) use ($name) {
+                        $q->where('name', 'like', '%' . $name . '%');
+                    });
+            })
+            ->when($start_date, function ($q)use($start_date) {
+                $q->whereDate('created_at', '>=', $start_date);
+            })
+            ->when($end_date, function ($q) use($end_date) {
+                $q->whereDate('created_at', '<=', $end_date);
+            });
+    }
+    public function scopeReportFilters($q){
+        $companion_id = request('companion_id');
+        $start_date = request('start_date');
+        $end_date = request('end_date');
+
+        return $q        
+            ->when($companion_id, function ($q) use($companion_id) {
+                $q->whereHas('companion',function ($q) use ($companion_id) {
+                        $q->where('companion_id',$companion_id);
+                    });
+            })
+            ->when($start_date, function ($q)use($start_date) {
+                $q->whereDate('created_at', '>=', $start_date);
+            })
+            ->when($end_date, function ($q) use($end_date) {
+                $q->whereDate('created_at', '<=', $end_date);
+            });
     }
      public function callBackViewPayment($invoice): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {

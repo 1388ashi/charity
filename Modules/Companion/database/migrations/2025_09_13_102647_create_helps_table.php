@@ -10,7 +10,7 @@ return new class extends Migration
     {
         Schema::create('helps', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('companion_id')->constrained('companions')->onDelete('cascade');
+            $table->foreignId('companion_id')->nullable()->constrained('companions')->onDelete('cascade');
             $table->foreignId('help_user_id')->constrained('help_users')->onDelete('cascade');
             $table->enum('type', ['cash', 'objects']);
             $table->string('amount')->nullable();

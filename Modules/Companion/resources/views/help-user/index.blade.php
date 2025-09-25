@@ -62,12 +62,21 @@
                     @forelse ($helps as $item)
                         <tr>
                             <td class="font-weight-bold">{{ $loop->iteration }}</td>
-                            <td>{{ $item->companion ? $item->companion->name . '-' . $item->companion->mobile : 'آزاد' }}</td>
+                            <td>{{ $item->companion ? $item->companion->name . ' - ' . $item->companion->mobile : 'آزاد(بدون همیار)' }}</td>
                             <td>
                                 @if ($item->type == 'cash')
                                     نقدی ({{ number_format($item->amount) }} تومن)
                                 @else
-                                    تجهیزات: <span class="font-weight-bold">{{ $item->equipments->pluck('name')->join(', ') }}</span> 
+                                    تجهیزات: 
+                                    <span class="font-weight-bold">
+                                        @foreach ($item->equipments as $equipment)
+                                            {{ $equipment->name }}
+                                            @if($equipment->pivot->quantity > 1)
+                                                ({{ $equipment->pivot->quantity }})
+                                            @endif
+                                            @if(!$loop->last), @endif
+                                        @endforeach
+                                    </span>
                                 @endif
                             </td>
                             <td>{{ verta($item->created_at)->format('Y/m/d H:i') }}</td>

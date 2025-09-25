@@ -3,6 +3,7 @@
 namespace Modules\Dashboard\App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use Modules\Companion\App\Models\Help;
 use Modules\Partner\App\Models\PartnerGroup;
 
 class DashboardController extends Controller
@@ -18,8 +19,9 @@ class DashboardController extends Controller
             ->latest('id')
             ->take(15)
             ->get();
+        extract(Help::getHelpData());
 
-        return view('dashboard::admin.index', compact('partnerGroups'));
+        return view('dashboard::admin.index', compact('partnerGroups','helps','todayTotal','weekTotal','monthTotal','allTotal'));
     }
 
 }

@@ -38,6 +38,7 @@
                         </a>
                         <ul class="sub-menu">
                             <li><a aria-haspopup="true" href="{{ route('admin.reports.partners-aggregate') }}" class="slide-item">گزارش جمعی درخواست های زوجین</a></li>
+                            <li><a aria-haspopup="true" href="{{ route('admin.reports.companions') }}" class="slide-item">گزارش همیاران</a></li>
                         </ul>
                     </li>
                 </ul>

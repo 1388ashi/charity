@@ -12,6 +12,121 @@
     </div>
 
     <div class="row">
+        <div class="col-xl-12 col-md-12 col-lg-12">
+            <div class="row">
+                <div class="col-xl-3 col-lg-4 col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-9">
+                                    {{-- <a href="{{ route('admin.products.index') }}"> --}}
+                                        <div class="mt-0 text-right">
+                                            <span class="fs-16 font-weight-semibold">جمع کمک های نقدی امروز :</span>
+                                            <p class="mb-0 mt-1 text-primary fs-20"> {{ number_format($todayTotal) }} 
+                                                @if($todayTotal > 0)
+                                                    <span class="font-weight-bold fs-18">
+                                                        تومن
+                                                    </span>
+                                                @endif
+                                            </p>
+                                        </div>
+                                    {{-- </a> --}}
+                                </div>
+                                <div class="col-3">
+                                    <div class="icon1 bg-primary my-auto float-left">
+                                        <i class="fa fa-money"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-lg-4 col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-9">
+                                    {{-- <a href="{{ route('admin.comments.index') }}"> --}}
+                                        <div class="mt-0 text-right">
+                                            <span class="fs-16 font-weight-semibold">جمع کمک های نقدی هفته اخیر :</span>
+                                            <p class="mb-0 mt-1 text-pink  fs-20">{{ number_format($weekTotal) }} 
+                                                @if($weekTotal > 0)
+                                                    <span class="font-weight-bold fs-18">
+                                                        تومن
+                                                    </span>
+                                                @endif
+                                            </p>
+                                        </div>
+                                    {{-- </a> --}}
+                                </div>
+                                <div class="col-3">
+                                    <div class="icon1 bg-pink my-auto float-left">
+                                        <i class="fa fa-money"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-lg-4 col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-9">
+                                    {{-- <a href="{{ route('admin.articles.index') }}"> --}}
+                                        <div class="mt-0 text-right">
+                                            <span class="fs-16 font-weight-semibold">جمع کمک های نقدی ماه اخیر :</span>
+                                            <p class="mb-0 mt-1 text-success fs-20"> {{ number_format($monthTotal) }}  
+                                                @if($monthTotal > 0)
+                                                    <span class="font-weight-bold fs-18">
+                                                        تومن
+                                                    </span>
+                                                @endif
+                                            </p>
+                                        </div>
+                                    {{-- </a> --}}
+                                </div>
+                                <div class="col-3">
+                                    <div class="icon1 bg-secondary my-auto float-left">
+                                      <i class="fa fa-money"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-lg-4 col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-9">
+                                    {{-- <a href="{{ route('admin.resumes.index') }}"> --}}
+                                        <div class="mt-0 text-right">
+                                            <span class="fs-16 font-weight-semibold">جمع کل کمک های نقدی :</span>
+                                            <p class="mb-0 mt-1 text-success fs-20"> {{ number_format($allTotal) }}  
+                                                @if($allTotal > 0)
+                                                    <span class="font-weight-bold fs-18">
+                                                        تومن
+                                                    </span>
+                                                @endif
+                                            </p>
+                                        </div>
+                                    {{-- </a> --}}
+                                </div>
+                                <div class="col-3">
+                                    <div class="icon1 bg-success my-auto float-left">
+                                        <i class="fa fa-money"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
         <div class="col-12">
             <div class="card">
                 <div class="card-header border-0">
@@ -28,7 +143,7 @@
                                 <thead>
                                     <tr class="text-center">
                                         <th>ردیف</th>
-                                        <th>نام هامی</th>
+                                        <th>نام حامی</th>
                                         <th>شماره تماس</th>
                                         <th>نوع کمک</th>
                                         <th>تاریخ ثبت</th>
@@ -46,7 +161,16 @@
                                                 @if ($item->type == 'cash')
                                                     نقدی ({{ number_format($item->amount) }} تومن)
                                                 @else
-                                                    تجهیزات: <span class="font-weight-bold">{{ $item->equipments->pluck('name')->join(', ') }}</span> 
+                                                    تجهیزات: 
+                                                    <span class="font-weight-bold">
+                                                        @foreach ($item->equipments as $equipment)
+                                                            {{ $equipment->name }}
+                                                            @if($equipment->pivot->quantity > 1)
+                                                                ({{ $equipment->pivot->quantity }})
+                                                            @endif
+                                                            @if(!$loop->last), @endif
+                                                        @endforeach
+                                                    </span>
                                                 @endif
                                             </td>
                                             <td>{{ verta($item->created_at)->format('Y/m/d H:i') }}</td>
