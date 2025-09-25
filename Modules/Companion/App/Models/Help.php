@@ -5,7 +5,7 @@ namespace Modules\Companion\App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Modules\Companion\App\Models\helpUser;
+use Modules\Companion\App\Models\HelpUser;
 use Modules\Equipment\App\Models\Equipment;
 use Modules\Invoice\Classes\Payable;
 
