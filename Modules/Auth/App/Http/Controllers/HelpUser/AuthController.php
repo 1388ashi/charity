@@ -5,7 +5,7 @@ namespace Modules\Auth\App\Http\Controllers\HelpUser;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Modules\Companion\App\Models\helpUser;
+use Modules\Companion\App\Models\HelpUser;
 
 class AuthController extends Controller
 {
