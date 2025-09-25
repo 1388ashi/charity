@@ -42,7 +42,7 @@ class Help extends Payable
             ->latest()
             ->take(10)
             ->get();
-        dd(1);
+
         $todayTotal = Help::where('type', 'cash')
             ->whereDate('created_at', Carbon::today())
             ->sum('amount');
