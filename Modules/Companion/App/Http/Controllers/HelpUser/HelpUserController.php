@@ -17,12 +17,23 @@ class HelpUserController extends Controller
 {
     public function index()
     {
-
         $code = request('code');
         $user = auth('help_user')->user();
         $helps = Help::with('companion:id,name,mobile','equipments:id,name')->latest()->where('help_user_id',$user->id)->get();
-
-        return view('companion::help-user.index',compact('code','user','helps'));
+        $totalAmountHelp = Help::where('help_user_id', $user->id)
+            ->where('type', 'cash')
+            ->sum('amount');
+        $totalEquipmentHelp = Help::join('equipment_help', 'helps.id', '=', 'equipment_help.help_id')
+            ->sum('equipment_help.quantity');
+        
+            return view('companion::help-user.index',compact('code','user','helps','totalAmountHelp','totalEquipmentHelp'));
+    }
+    
+    public function profile() {
+        $code = request('code');
+        $user = auth('help_user')->user();
+        
+        return view('companion::help-user.profile',compact('code','user'));
     }
 
     public function update(UpdateRequest $request,HelpUser $helpUser){
@@ -58,7 +69,7 @@ class HelpUserController extends Controller
                 ->toArray();
             $help->equipments()->attach($pivotData);
             //go to list
-            return redirect()->to('/help-user?code=' . urlencode($request->code ?? ''))->with('success', 'همیاری شما با موفقیت ثبت شد ✅');
+            return redirect()->to('/help-user/list?code=' . urlencode($request->code ?? ''))->with('success', 'همیاری شما با موفقیت ثبت شد ✅');
         }
         elseif($request->type == 'cash' && $request->amount){
             return $help->pay();

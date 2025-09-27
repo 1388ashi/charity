@@ -4,7 +4,7 @@ namespace Modules\Equipment\App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Modules\Companion\Models\Help;
+use Modules\Companion\App\Models\Help;
 use Modules\Partner\App\Models\PartnerGroup;
 // use Modules\Equipment\Database\Factories\EquipmentFactory;
 

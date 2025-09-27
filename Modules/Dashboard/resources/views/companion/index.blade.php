@@ -125,7 +125,28 @@
             </div>
         </div>
     </div>
-
+    <div class="row">
+        <div class="col-xl-6 col-lg-4 col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="mt-0 d-flex justify-content-between align-items-center">
+                                <span class="fs-16 text-right font-weight-semibold">لینک همیاری من :</span>
+                                <p id="copyLink" 
+                                    class="mb-0 text-left text-primary fs-16" 
+                                    style="cursor: pointer;" 
+                                    data-toggle="tooltip"
+                                    data-original-title="برای دریافت لینک کلیک کنید">
+                                    {{ env('APP_URL') . '/help-user?code=' . $companion->tokenCode->code }}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="row">
         <div class="col-12">
             <div class="card">
@@ -191,4 +212,17 @@
             </div>
         </div>
     </div>
+@endsection
+@section('scripts')
+    <script>
+        document.getElementById("copyLink").addEventListener("click", function() {
+            var text = this.innerText;
+            
+            navigator.clipboard.writeText(text).then(function() {
+                alert("لینک کپی شد ✅");
+            }, function(err) {
+                alert("خطا در کپی کردن ❌");
+            });
+        });
+    </script>
 @endsection

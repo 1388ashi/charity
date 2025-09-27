@@ -12,7 +12,8 @@ Route::middleware(['web', 'auth:user'])->name('user.')->prefix('user')->group(fu
     Route::resource('companions', UserCompanionController::class)->except(['create','index','edit','show']);
 });
 Route::middleware(['web', 'auth:help_user'])->prefix('help-user')->group(function () {
-    Route::get('/', [HelpUserController::class,'index'])->name('help-user');
+    Route::get('/', [HelpUserController::class,'profile'])->name('help-user');
+    Route::get('/list', [HelpUserController::class,'index'])->name('help-user.index');
     Route::put('/{helpUser}', [HelpUserController::class,'update'])->name('help-user.update');
     Route::get('/companions', [HelpUserController::class,'helpPage'])->name('help-user.help-page');
     Route::post('companions/pay', [HelpUserController::class,'pay'])->name('help-user.pay');

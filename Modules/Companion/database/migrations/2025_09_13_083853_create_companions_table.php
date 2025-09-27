@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('national_code');
             $table->string('mobile');
             $table->string('code')->nullable();
+            $table->enum('salary_type', ['percentage', 'fixed']);
             $table->foreignId('city_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });

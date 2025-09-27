@@ -11,6 +11,7 @@ Route::prefix('/')->name('front.')->group(function() {
 });
 Route::middleware(['web', 'auth:admin'])->name('admin.')->prefix('admin')->group(function () {
     Route::resource('partners', AdminPartnerController::class)->except(['create','store','destroy']);
+    // Route::get('partners/{partnerGroup}/print', [AdminPartnerController::class,'print'])->name('partners.print');
 });
 Route::middleware(['web', 'auth:user'])->name('user.')->prefix('user')->group(function () {
     // Route::resource('partners', UserPartnerController::class)->except(['create','store','destroy']);

@@ -3,48 +3,56 @@
     <div class="page-header">
         <x-create-button route="help-user.help-page" :routeParams="['code' => $code]"  title="کمک جدید" />
     </div>
-
-    <x-card>
-        <x-slot name="cardTitle">اطلاعات کاربری</x-slot>
-        <x-slot name="cardOptions"><x-card-options /></x-slot>
-        <x-slot name="cardBody">
-            @include('components.errors')
-            <div class="d-flex justify-content-center align-items-center" style="min-height: 10vh;">
-                <form action="{{ route('help-user.update', $user->id) }}" class="col-12 col-md-8 col-lg-6 p-0" method="POST">
-                    @csrf
-                    @method('PUT')
-                    <div class="">
-                        <div class="row mb-3">
-                            <div class="col-12 col-md-6 mb-3 mb-md-0">
-                                <div class="form-group">
-                                    <label for="name" class="control-label">نام و نام خانوادگی <span class="text-danger">&starf;</span></label>
-                                    <input type="text" name="name" value="{{ old('name', $user->name) }}"
-                                        class="form-control" id="name"
-                                        placeholder="نام کامل خود را اینجا وارد کنید..." required autofocus>
+     <div class="row">
+        <div class="col-xl-12 col-md-12 col-lg-12">
+            <div class="row">
+                <div class="col-xl-6 col-lg-6 col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-9">
+                                    <div class="mt-0 text-right">
+                                        <span class="fs-16 font-weight-semibold">مجموع کمک های نقدی :</span>
+                                        <p class="mb-0 mt-1 text-primary fs-20"> {{ number_format($totalAmountHelp) }} 
+                                            @if($totalAmountHelp > 0)
+                                                <span class="font-weight-bold fs-18">
+                                                    تومن
+                                                </span>
+                                            @endif
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="col-3">
+                                    <div class="icon1 bg-primary my-auto float-left">
+                                        <i class="fa fa-money"></i>
+                                    </div>
                                 </div>
                             </div>
-
-                            <div class="col-12 col-md-6">
-                                <div class="form-group">
-                                    <label for="national_code" class="control-label">کد ملی <span class="text-danger">&starf;</span></label>
-                                    <input type="text" name="national_code" value="{{ old('national_code', $user->national_code) }}"
-                                        class="form-control" id="national_code"
-                                        placeholder="کد ملی خود را اینجا وارد کنید..." required>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="text-center">
-                            <button type="submit" class="btn btn-success px-4">
-                                ثبت اطلاعات
-                                <i class="fa fa-hand-o-up text-white mt-1 mr-1"></i>
-                            </button>
                         </div>
                     </div>
-                </form>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-9">
+                                    <div class="mt-0 text-right">
+                                        <span class="fs-16 font-weight-semibold">تعداد وسیله های اهدایی :</span>
+                                        <p class="mb-0 mt-1 text-pink  fs-20">{{ $totalEquipmentHelp }}</p>
+                                    </div>
+                                </div>
+                                <div class="col-3">
+                                    <div class="icon1 bg-pink my-auto float-left">
+                                        <i class="fa fa-shopping-bag"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </x-slot>
-    </x-card>
-
+        </div>
+    </div>
     <x-card>
         <x-slot name="cardTitle">لیست کمک ها</x-slot>
         <x-slot name="cardOptions"><x-card-options /></x-slot>
@@ -52,7 +60,7 @@
             <x-table-component>
                 <x-slot name="tableTh">
                     <tr>
-                        @php($tableTh = ['ردیف', 'همیار مرتبط','نوع کمک','تاریخ ثبت'])
+                        @php($tableTh = ['ردیف','نوع کمک','تاریخ ثبت'])
                         @foreach ($tableTh as $th)
                             <th>{{ $th }}</th>
                         @endforeach
@@ -62,7 +70,6 @@
                     @forelse ($helps as $item)
                         <tr>
                             <td class="font-weight-bold">{{ $loop->iteration }}</td>
-                            <td>{{ $item->companion ? $item->companion->name . ' - ' . $item->companion->mobile : 'آزاد(بدون همیار)' }}</td>
                             <td>
                                 @if ($item->type == 'cash')
                                     نقدی ({{ number_format($item->amount) }} تومن)

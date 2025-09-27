@@ -10,7 +10,7 @@ use Modules\Area\App\Models\City;
 
 class Companion extends Authenticatable
 {
-    protected $fillable = ['name','national_code','mobile','city_id'];
+    protected $fillable = ['name','national_code','mobile','city_id','salary_type'];
     
     public function isDeletable(): bool
     {
@@ -30,7 +30,7 @@ class Companion extends Authenticatable
     {
         return $this->belongsTo(City::class);
     }
-    public function code()
+    public function tokenCode()
     {
         return $this->hasOne(CompanionCode::class);
     }

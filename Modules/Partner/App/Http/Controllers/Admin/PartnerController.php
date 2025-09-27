@@ -28,6 +28,13 @@ class PartnerController extends Controller
         
         return view('partner::admin.show',compact('partnerGroup','notes'));
     }
+    // public function print($id)
+    // {
+    //     $partnerGroup = PartnerGroup::findOrfail($id);
+    //     $notes = Note::where('partner_group_id',$partnerGroup->id)->where('user_id',$partnerGroup->city->user->id)->get();
+        
+    //     return view('partner::print',compact('partnerGroup','notes'));
+    // }
     public function update()
     {
         return view('partner::index');

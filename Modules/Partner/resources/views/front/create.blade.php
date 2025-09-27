@@ -179,6 +179,28 @@
                                         class="form-control" id="job" placeholder="شغل خود را اینجا وارد کنید..." required>
                                 </div>
                             </div>
+                             <div class="col-6 col-lg-4">
+                                <div class="form-group">
+                                    <label class="control-label">استان</label>
+                                    <span class="text-danger">&starf;</span>
+                                    <select id="provinceSelect" name="province_id" class="form-control select2" required>
+                                        <option value="" disabled selected>-- استان را انتخاب کنید --</option>
+                                        @foreach ($provinces as $province)
+                                            <option value="{{ $province->id }}">{{ $province->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-6 col-lg-4">
+                                <div class="form-group">
+                                    <label class="control-label">شهر</label>
+                                    <span class="text-danger">&starf;</span>
+                                    <select id="citySelect" name="city_id" class="form-control select2" required>
+                                        <option value="" disabled selected>-- شهر را انتخاب کنید --</option>
+                                    </select>
+                                </div>
+                            </div>
                             <div class="col-6 col-lg-4">
                                 <div class="form-group">
                                     <label for="education" class="control-label">تحصیلات</label>
@@ -317,30 +339,6 @@
                                     <input type="text" name="marriage_location" value="{{ old('marriage_location') }}"
                                     class="form-control" id="marriage_location"
                                     placeholder="مکان ازدواج را اینجا وارد کنید..." autofocus>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-6 col-lg-4">
-                                <div class="form-group">
-                                    <label class="control-label">استان</label>
-                                    <span class="text-danger">&starf;</span>
-                                    <select id="provinceSelect" name="province_id" class="form-control select2" required>
-                                        <option value="" disabled selected>-- استان را انتخاب کنید --</option>
-                                        @foreach ($provinces as $province)
-                                            <option value="{{ $province->id }}">{{ $province->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="col-6 col-lg-4">
-                                <div class="form-group">
-                                    <label class="control-label">شهر</label>
-                                    <span class="text-danger">&starf;</span>
-                                    <select id="citySelect" name="city_id" class="form-control select2" required>
-                                        <option value="" disabled selected>-- شهر را انتخاب کنید --</option>
-                                    </select>
                                 </div>
                             </div>
                         </div>
