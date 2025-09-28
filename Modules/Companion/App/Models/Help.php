@@ -44,9 +44,9 @@ class Help extends Payable
                 'companion.city:id,name',
                 'equipments:id,name'
             ])
-            ->when($user && $user->city_id, function ($query) use ($user) {
+            ->when($user && $user->city->id, function ($query) use ($user) {
                 $query->whereHas('companion', function ($q) use ($user) {
-                    $q->where('city_id', $user->city_id);
+                    $q->where('city_id', $user->city->id);
                 });
             })
             ->latest()
@@ -55,9 +55,9 @@ class Help extends Payable
 
         $todayTotal = Help::where('type', 'cash')
             ->whereDate('created_at', Carbon::today())
-            ->when($user && $user->city_id, function ($query) use ($user) {
+            ->when($user && $user->city->id, function ($query) use ($user) {
                 $query->whereHas('companion', function ($q) use ($user) {
-                    $q->where('city_id', $user->city_id);
+                    $q->where('city_id', $user->city->id);
                 });
             })
             ->sum('amount');
@@ -67,9 +67,9 @@ class Help extends Payable
                 Carbon::now()->subWeek()->startOfDay(),
                 Carbon::now()->endOfDay()
             ])
-            ->when($user && $user->city_id, function ($query) use ($user) {
+            ->when($user && $user->city->id, function ($query) use ($user) {
                 $query->whereHas('companion', function ($q) use ($user) {
-                    $q->where('city_id', $user->city_id);
+                    $q->where('city_id', $user->city->id);
                 });
             })
             ->sum('amount');
@@ -79,17 +79,17 @@ class Help extends Payable
                 Carbon::now()->subMonth()->startOfDay(),
                 Carbon::now()->endOfDay()
             ])
-            ->when($user && $user->city_id, function ($query) use ($user) {
+            ->when($user && $user->city->id, function ($query) use ($user) {
                 $query->whereHas('companion', function ($q) use ($user) {
-                    $q->where('city_id', $user->city_id);
+                    $q->where('city_id', $user->city->id);
                 });
             })
             ->sum('amount');
 
         $allTotal = Help::where('type', 'cash')
-            ->when($user && $user->city_id, function ($query) use ($user) {
+            ->when($user && $user->city->id, function ($query) use ($user) {
                 $query->whereHas('companion', function ($q) use ($user) {
-                    $q->where('city_id', $user->city_id);
+                    $q->where('city_id', $user->city->id);
                 });
             })
             ->sum('amount');
