@@ -38,15 +38,17 @@ class Help extends Payable
     }
    public static function getHelpData($user = null)
     {
+        $cityIds = $user?->cities?->pluck('id')->toArray();
+
         $helps = Help::with([
                 'helpUser:id,name,mobile',
                 'companion:id,name,city_id',
                 'companion.city:id,name',
                 'equipments:id,name'
             ])
-            ->when($user && $user->city->id, function ($query) use ($user) {
-                $query->whereHas('companion', function ($q) use ($user) {
-                    $q->where('city_id', $user->city->id);
+            ->when($cityIds, function ($query) use ($cityIds) {
+                $query->whereHas('companion', function ($q) use ($cityIds) {
+                    $q->whereIn('city_id', $cityIds);
                 });
             })
             ->latest()
@@ -55,9 +57,9 @@ class Help extends Payable
 
         $todayTotal = Help::where('type', 'cash')
             ->whereDate('created_at', Carbon::today())
-            ->when($user && $user->city->id, function ($query) use ($user) {
-                $query->whereHas('companion', function ($q) use ($user) {
-                    $q->where('city_id', $user->city->id);
+            ->when($cityIds, function ($query) use ($cityIds) {
+                $query->whereHas('companion', function ($q) use ($cityIds) {
+                    $q->whereIn('city_id', $cityIds);
                 });
             })
             ->sum('amount');
@@ -67,9 +69,9 @@ class Help extends Payable
                 Carbon::now()->subWeek()->startOfDay(),
                 Carbon::now()->endOfDay()
             ])
-            ->when($user && $user->city->id, function ($query) use ($user) {
-                $query->whereHas('companion', function ($q) use ($user) {
-                    $q->where('city_id', $user->city->id);
+            ->when($cityIds, function ($query) use ($cityIds) {
+                $query->whereHas('companion', function ($q) use ($cityIds) {
+                    $q->whereIn('city_id', $cityIds);
                 });
             })
             ->sum('amount');
@@ -79,17 +81,17 @@ class Help extends Payable
                 Carbon::now()->subMonth()->startOfDay(),
                 Carbon::now()->endOfDay()
             ])
-            ->when($user && $user->city->id, function ($query) use ($user) {
-                $query->whereHas('companion', function ($q) use ($user) {
-                    $q->where('city_id', $user->city->id);
+            ->when($cityIds, function ($query) use ($cityIds) {
+                $query->whereHas('companion', function ($q) use ($cityIds) {
+                    $q->whereIn('city_id', $cityIds);
                 });
             })
             ->sum('amount');
 
         $allTotal = Help::where('type', 'cash')
-            ->when($user && $user->city->id, function ($query) use ($user) {
-                $query->whereHas('companion', function ($q) use ($user) {
-                    $q->where('city_id', $user->city->id);
+            ->when($cityIds, function ($query) use ($cityIds) {
+                $query->whereHas('companion', function ($q) use ($cityIds) {
+                    $q->whereIn('city_id', $cityIds);
                 });
             })
             ->sum('amount');
@@ -102,6 +104,7 @@ class Help extends Payable
             'allTotal'   => $allTotal,
         ];
     }
+
     public function scopeFilters($q){
         $name = request('name');
         $start_date = request('start_date');
