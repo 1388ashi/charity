@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('national_code');
+            $table->string('salary')->nullable();
             $table->string('mobile');
             $table->string('code')->nullable();
             $table->enum('salary_type', ['percentage', 'fixed']);

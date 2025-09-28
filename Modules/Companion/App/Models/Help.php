@@ -36,27 +36,64 @@ class Help extends Payable
     {
         return $this->amount;
     }
-    public static function getHelpData()
+   public static function getHelpData($user = null)
     {
-        $helps = Help::with('helpUser:id,name,mobile','companion:id,name,city_id','companion.city:id,name','equipments:id,name')
+        $helps = Help::with([
+                'helpUser:id,name,mobile',
+                'companion:id,name,city_id',
+                'companion.city:id,name',
+                'equipments:id,name'
+            ])
+            ->when($user && $user->city_id, function ($query) use ($user) {
+                $query->whereHas('companion', function ($q) use ($user) {
+                    $q->where('city_id', $user->city_id);
+                });
+            })
             ->latest()
             ->take(10)
             ->get();
 
         $todayTotal = Help::where('type', 'cash')
             ->whereDate('created_at', Carbon::today())
+            ->when($user && $user->city_id, function ($query) use ($user) {
+                $query->whereHas('companion', function ($q) use ($user) {
+                    $q->where('city_id', $user->city_id);
+                });
+            })
             ->sum('amount');
 
         $weekTotal = Help::where('type', 'cash')
-            ->whereBetween('created_at', [Carbon::now()->subWeek()->startOfDay(), Carbon::now()->endOfDay()])
+            ->whereBetween('created_at', [
+                Carbon::now()->subWeek()->startOfDay(),
+                Carbon::now()->endOfDay()
+            ])
+            ->when($user && $user->city_id, function ($query) use ($user) {
+                $query->whereHas('companion', function ($q) use ($user) {
+                    $q->where('city_id', $user->city_id);
+                });
+            })
             ->sum('amount');
 
         $monthTotal = Help::where('type', 'cash')
-            ->whereBetween('created_at', [Carbon::now()->subMonth()->startOfDay(), Carbon::now()->endOfDay()])
+            ->whereBetween('created_at', [
+                Carbon::now()->subMonth()->startOfDay(),
+                Carbon::now()->endOfDay()
+            ])
+            ->when($user && $user->city_id, function ($query) use ($user) {
+                $query->whereHas('companion', function ($q) use ($user) {
+                    $q->where('city_id', $user->city_id);
+                });
+            })
             ->sum('amount');
-        
+
         $allTotal = Help::where('type', 'cash')
+            ->when($user && $user->city_id, function ($query) use ($user) {
+                $query->whereHas('companion', function ($q) use ($user) {
+                    $q->where('city_id', $user->city_id);
+                });
+            })
             ->sum('amount');
+
         return [
             'helps'      => $helps,
             'todayTotal' => $todayTotal,

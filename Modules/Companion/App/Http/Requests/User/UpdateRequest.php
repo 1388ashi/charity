@@ -18,12 +18,17 @@ class UpdateRequest extends FormRequest
             'name' => ["required","string"],
             'national_code' => ["required","string","digits:10","unique:companions,national_code," . $companionId],
             'mobile' => ["required","string","digits:11","unique:companions,mobile," . $companionId],
+            'salary_type' => 'required|in:percentage,fixed',
+            'salary' => 'required|min:0'
         ];
     }
 
-    /**
-     * Determine if the user is authorized to make this request.
-     */
+     protected function prepareForValidation()
+    {
+        $this->merge([
+            'salary' => str_replace(',', '', $this->input('salary')),
+        ]);
+    }
     public function authorize(): bool
     {
         return true;

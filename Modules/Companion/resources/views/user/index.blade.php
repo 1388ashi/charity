@@ -13,7 +13,7 @@
             <x-table-component>
                 <x-slot name="tableTh">
                     <tr>
-                        @php($tableTh = ['ردیف', 'نام','موبایل','تاریخ ثبت', 'عملیات'])
+                        @php($tableTh = ['ردیف', 'نام','موبایل','نوع قرارداد','تاریخ ثبت', 'عملیات'])
                         @foreach ($tableTh as $th)
                             <th>{{ $th }}</th>
                         @endforeach
@@ -25,6 +25,8 @@
                             <td class="font-weight-bold">{{ $loop->iteration }}</td>
                             <td>{{ $companion->name }}</td>
                             <td>{{ $companion->mobile }}</td>
+                            <td>
+                                {{ $companion->salary_type == 'fixed' ? 'ثابت' . ' - ' .  number_format($companion->salary) . ' تومن '  : 'درصد' . ' - ' . $companion->salary . '%' }}</td>
                             <td>{{ verta($companion->created_at)->format('Y/m/d H:i') }}</td>
                             <td>
                                 @include('core::includes.edit-modal-button', [

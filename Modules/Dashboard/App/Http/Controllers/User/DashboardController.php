@@ -10,24 +10,24 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        $userId = auth('user')->user()->id;
+        $user = auth('user')->user();
         $partnerGroups = PartnerGroup::with([
                 'city:id,name,province_id,user_id',
                 'city.user:id,name',
                 'province:id,name,user_id'
             ])
             ->where('status', PartnerGroup::STATUS_NEW)
-            ->where(function ($q) use ($userId) {
-                $q->whereHas('city', function ($q) use ($userId) {
-                    $q->where('user_id', $userId);
+            ->where(function ($q) use ($user) {
+                $q->whereHas('city', function ($q) use ($user) {
+                    $q->where('user_id', $user->id);
                 })
-                ->orWhereHas('province', function ($q) use ($userId) {
-                    $q->where('user_id', $userId);
+                ->orWhereHas('province', function ($q) use ($user) {
+                    $q->where('user_id', $user->id);
                 });
             })
             ->latest('id')
             ->get();
-        extract(Help::getHelpData());
+        extract(Help::getHelpData($user));
 
         return view('dashboard::user.index', compact('partnerGroups','helps','todayTotal','weekTotal','monthTotal','allTotal'));
     }

@@ -10,7 +10,7 @@ use Modules\Area\App\Models\City;
 
 class Companion extends Authenticatable
 {
-    protected $fillable = ['name','national_code','mobile','city_id','salary_type'];
+    protected $fillable = ['name','national_code','mobile','city_id','salary_type','salary'];
     
     public function isDeletable(): bool
     {
