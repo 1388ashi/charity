@@ -11,6 +11,7 @@ class DashboardController extends Controller
     public function index()
     {
         $user = auth('user')->user();
+        $user->load('city');
         $partnerGroups = PartnerGroup::with([
                 'city:id,name,province_id,user_id',
                 'city.user:id,name',
