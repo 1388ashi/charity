@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Modules\Companion\App\Http\Controllers\HelpUser\HelpUserController;
 use Modules\Companion\App\Http\Controllers\Companion\CompanionController as CompanionController;
+use Modules\Companion\App\Http\Controllers\Companion\WithdrawController;
 use Modules\Companion\App\Http\Controllers\User\CompanionController as UserCompanionController;
 use Modules\Companion\App\Http\Controllers\Front\CompanionController as FrontCompanionController;
 
@@ -20,4 +21,7 @@ Route::middleware(['web', 'auth:help_user'])->prefix('help-user')->group(functio
 });
 Route::middleware(['web', 'auth:companion'])->name('companion.')->prefix('companion')->group(function () {
     Route::get('/help-users', [CompanionController::class,'index'])->name('help-user.index');
+    Route::get('/wallet', [WithdrawController::class,'wallet'])->name('wallet.index');
+    Route::get('/withdraws',[WithdrawController::class, 'index'])->name('withdraws.index');
+    Route::post('/withdraws',[WithdrawController::class, 'store'])->name('withdraws.store');
 });

@@ -7,6 +7,9 @@
                         <a href="{{ route('companion.dashboard') }}" class="sub-icon"><i class="feather feather-home hor-icon"></i>داشبورد</a>
                     </li>
                     <li aria-haspopup="true">
+                        <a href="{{ route('companion.wallet.index') }}" class="sub-icon"><i class="feather feather-credit-card hor-icon"></i>کیف پول</a>
+                    </li>
+                    <li aria-haspopup="true">
                         <a href="{{ route('companion.help-user.index') }}" class="sub-icon"><i class="feather feather-shopping-bag hor-icon"></i>کمک های اهدا شده</a>
                     </li>
                 </ul>
