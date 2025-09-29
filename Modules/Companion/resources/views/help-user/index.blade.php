@@ -38,7 +38,9 @@
                                 <div class="col-9">
                                     <div class="mt-0 text-right">
                                         <span class="fs-16 font-weight-semibold">تعداد وسیله های اهدایی :</span>
-                                        <p class="mb-0 mt-1 text-pink  fs-20">{{ $totalEquipmentHelp }}</p>
+                                        <p class="mb-0 mt-1 text-pink  fs-20">{{ $totalEquipmentHelp }}  <span class="font-weight-bold fs-18">
+                                                    عدد
+                                                </span></p>
                                     </div>
                                 </div>
                                 <div class="col-3">

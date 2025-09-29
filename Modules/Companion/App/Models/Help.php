@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Modules\Companion\App\Models\HelpUser;
+
 use Modules\Equipment\App\Models\Equipment;
 use Modules\Invoice\Classes\Payable;
 
@@ -151,11 +152,22 @@ class Help extends Payable
         );
     }
 
+
+    
     public function onSuccessPayment(\Modules\Invoice\App\Models\Invoice $invoice)
     {
          $this->update([
             'status_payment' => 1,
         ]);
+        if ($this->companion_id && $this->companion->salary_type == 'percentage') {
+            $percentage = $this->companion->salary ?? 10;
+            $return = $this->amount / 100 * $percentage;
+            $this->companion->deposit($return, [
+               'causer_id' => $this->helpUser->id,
+               'causer_mobile' => $this->helpUser->mobile,
+               'description' => "درصد بابت کمک با شناسه" . $this->id,
+           ]);
+        }
         //send sms to user
         return $this->callBackViewPayment($invoice);
     }

@@ -60,7 +60,7 @@ class HelpUserController extends Controller
             unset($data['amount']);
         }
         $help = Help::query()->create($data);
-
+        
         if ($request->filled('equipments') && $request->type == 'objects') {
             $pivotData = collect($request->equipments)
                 ->mapWithKeys(fn ($eq) => [

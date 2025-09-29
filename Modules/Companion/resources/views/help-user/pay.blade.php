@@ -92,7 +92,7 @@
                         <h4>کمک مالی:</h4>
                         <div class="row mb-3 p-3">
                             <div class="col-12 d-flex align-items-center">
-                                <input type="range" class="form-control w-75" id="donationRange" min="1000000" max="100000000" step="1000000"
+                                <input type="range" class="form-control w-75" id="donationRange" min="1000000" max="1000000000" step="1000000"
                                     value="1000000" name="amount" oninput="updateDonationValue(this.value)">
                                 <p class="mt-2 mr-2 mb-0">مبلغ انتخابی: <span id="donationValue">1,000,000</span> تومان</p>
                             </div>

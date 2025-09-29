@@ -5,7 +5,7 @@ namespace Modules\Core\Classes;
 
 
 use Bavix\Wallet\Models\Transfer;
-use Modules\Customer\Entities\Deposit;
+use Modules\User\App\Models\Deposit;
 
 class Transaction extends \Bavix\Wallet\Models\Transaction
 {
