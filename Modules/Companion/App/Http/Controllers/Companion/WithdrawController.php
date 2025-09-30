@@ -29,7 +29,7 @@ class WithdrawController extends Controller
         $withdraws = Withdraw::latest()
         ->where('companion_id', $companion->id)->paginate();
 
-        return view('order::companion.wallet.withdraws', compact(var_name: 'withdraws','booth'));
+        return view('companion::companion.wallet.index', compact('withdraws','companion'));
     }
 
     // public function show(Withdraw $withdraw)

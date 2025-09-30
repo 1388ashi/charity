@@ -24,7 +24,7 @@ class StoreRequest extends FormRequest
     public function checkBalance()
     {
         $companion = auth('companion')->user();
-        if ($companion->booth->wallet->balance < $this->amount) {
+        if ($companion->wallet->balance < $this->amount) {
             throw Helpers::makeValidationException('مبلغ مورد نظر از شارژ کیف پول بیشتر است');
         }
     }

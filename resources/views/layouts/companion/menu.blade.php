@@ -12,6 +12,9 @@
                     <li aria-haspopup="true">
                         <a href="{{ route('companion.help-user.index') }}" class="sub-icon"><i class="feather feather-shopping-bag hor-icon"></i>کمک های اهدا شده</a>
                     </li>
+                    <li aria-haspopup="true">
+                        <a href="{{ route('companion.report.transactions') }}" class="sub-icon"><i class="fe fe-bar-chart-2 hor-icon"></i>گزارش تراکنش کیف پول</a>
+                    </li>
                 </ul>
             </nav>
         </div>

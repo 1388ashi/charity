@@ -17,6 +17,11 @@
                         </a> 
                     </li>
                     <li aria-haspopup="true">
+                        <a href="{{ route('user.companions.withdraws') }}" class="sub-icon">
+                            <i class="feather feather-users hor-icon"></i>برداشت های کیف پول
+                        </a> 
+                    </li>
+                    <li aria-haspopup="true">
                         <a href="{{ route('user.management.partners') }}" class="sub-icon">
                             <i class="feather feather-file-text hor-icon"></i>درخواست های زوجین
                         </a> 
