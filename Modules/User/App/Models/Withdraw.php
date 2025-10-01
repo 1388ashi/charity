@@ -64,7 +64,19 @@ class Withdraw extends Model implements ProductInterface
             }
         });
     }
-
+    public function scopeUserFilters($query)
+    {
+        return $query
+            ->when(request('companion_id'), function ($q) {
+                    $q->whereRelation('companion','id', request('companion_id'));
+            })
+            ->when(request('start_date'), function ($q) {
+                $q->whereDate('created_at', '>=', request('start_date'));
+            })
+            ->when(request('end_date'), function ($q) {
+                $q->whereDate('created_at', '<=', request('end_date'));
+            });
+    }
     public static function getAvailableStatuses(): array
     {
         return [

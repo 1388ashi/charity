@@ -10,10 +10,10 @@ use Bavix\Wallet\Traits\HasWallet;
 use Bavix\Wallet\Interfaces\CartInterface;
 use Bavix\Wallet\Interfaces\ProductInterface;
 use Bavix\Wallet\Models\Transfer;
-use Bavix\Wallet\Interfaces\Customer as CustomerWallet;
+use Bavix\Wallet\Interfaces\Customer as CompanionWallet;
 use Modules\Area\App\Models\City;
 
-class Companion extends Authenticatable implements CustomerWallet
+class Companion extends Authenticatable implements CompanionWallet
 {
     use HasWallet;
     protected $fillable = ['name','national_code','mobile','city_id','salary_type','salary'];

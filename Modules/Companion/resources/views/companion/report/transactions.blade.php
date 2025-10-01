@@ -29,8 +29,8 @@
                                 @endif
 
                             </td>
-                            <td>{{ number_format($item->amount) }}</td>
-                            <td>{{ $item->meta['description'] }}</td>
+                            <td style="direction: ltr;">{{ number_format($item->amount) }}</td>
+                            <td>{{ $item->meta ? $item->meta['description'] : '-' }}</td>
                             <td>{{ verta($item->created_at)->format('Y/m/d H:i') }}</td>
                         </tr>
                     @empty

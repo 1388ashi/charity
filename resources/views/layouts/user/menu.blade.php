@@ -17,8 +17,8 @@
                         </a> 
                     </li>
                     <li aria-haspopup="true">
-                        <a href="{{ route('user.companions.withdraws') }}" class="sub-icon">
-                            <i class="feather feather-users hor-icon"></i>برداشت های کیف پول
+                        <a href="{{ route('user.withdraws.index') }}" class="sub-icon">
+                            <i class="feather feather-credit-card hor-icon"></i>برداشت های کیف پول
                         </a> 
                     </li>
                     <li aria-haspopup="true">

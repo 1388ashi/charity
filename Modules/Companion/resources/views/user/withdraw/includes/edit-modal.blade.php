@@ -2,7 +2,7 @@
 <x-modal id="editStatusModal-{{ $withdraw->id }}" size="md">
     <x-slot name="title">ویرایش وضعیت - کد {{ $withdraw->id }}</x-slot>
     <x-slot name="body">
-        <form action="{{ route('admin.withdraws.edit-status', $withdraw) }}" method="POST" class="save">
+        <form action="{{ route('user.withdraws.edit-status', $withdraw) }}" method="POST" class="save">
             @csrf
             @method("PUT")
             <div class="row">

@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Modules\Companion\App\Http\Controllers\Admin\WithdrawController as AdminWithdrawController;
+use Modules\Companion\App\Http\Controllers\User\WithdrawController as UserWithdrawController;
 use Modules\Companion\App\Http\Controllers\HelpUser\HelpUserController;
 use Modules\Companion\App\Http\Controllers\Companion\CompanionController as CompanionController;
 use Modules\Companion\App\Http\Controllers\Companion\WithdrawController as CompanionWithdrawController;
@@ -12,8 +12,8 @@ Route::middleware(['web', 'auth:user'])->name('user.')->prefix('user')->group(fu
     Route::get('management-companions', [UserCompanionController::class,'management'])->name('management.companions');
     Route::get('companions/{city}', [UserCompanionController::class,'index'])->name('companions.index');
     Route::resource('companions', UserCompanionController::class)->except(['create','index','edit','show']);
-    Route::resource('withdraws', AdminWithdrawController::class);
-    Route::put('withdraws/edit-status/{withdraw}',[AdminWithdrawController::class, 'editStatus'])->name('withdraws.edit-status');
+    Route::resource('withdraws', UserWithdrawController::class)->except(['show','create','edit']);
+    Route::put('withdraws/edit-status/{withdraw}',[UserWithdrawController::class, 'editStatus'])->name('withdraws.edit-status');
 });
 Route::middleware(['web', 'auth:help_user'])->prefix('help-user')->group(function () {
     Route::get('/', [HelpUserController::class,'profile'])->name('help-user');

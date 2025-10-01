@@ -5,66 +5,54 @@
         <x-breadcrumb :items="[['title' => 'برداشت های کیف پول']]" />
     </div>
 
-    {{-- <form method="get" id='basicSearch' action="{{route('admin.admins.index')}}"
-          autocomplete="off"
-          onblur="document.form1.input.value = this.value;">
-        <div class="row">
-            <div class="col-xl-12 col-md-12 col-lg-12" >
-                <div class="card">
-                    <div class="card-header  border-0">
-                        <div class="card-title" data-toggle="card-collapse" style="font-size: 16px;font-weight: bold;">جستجوی پیشرفته</div>
-                        <div class="card-options">
-                            <a href="#" class="card-options-collapse" data-toggle="card-collapse" style="margin: 5px;"><i
-                                    class="fe fe-chevron-up"></i></a>
-                            <a href="#" class="card-options-fullscreen" data-toggle="card-fullscreen" style="margin: 5px;"><i
-                                    class="fe fe-maximize"></i></a>
-                            <a href="#" class="card-options-remove" data-toggle="card-remove" style="margin: 5px;"><i class="fe fe-x"></i></a>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col">
-                                <div class="row">
-                                    <div class="col">
-                                        <div class="form-group">
-                                            <label for="name">نام و نام خانوادگی</label>
-                                            <input type="text" name="name" class="form-control"
-                                                   placeholder="نام و نام خانوادگی" id="name" value="{{ request('name') }}">
-                                        </div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="form-group">
-                                            <label for="mobile">تلفن همراه</label>
-                                            <input type="text" name="mobile" value="{{ request('mobile') }}"
-                                                   class="form-control"
-                                                   id="mobile" placeholder="تلفن همراه">
-                                        </div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="form-group">
-                                            <label for="status">وضعیت</label>
-                                            <select class="form-control" name="status" id="status">
-                                                <option value="">همه وضعیت ها</option>
-                                                <option value="1">فعال</option>
-                                                <option value="0">غیرفعال</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
+  <x-card>
+        <x-slot name="cardTitle">جستجوی پیشرفته</x-slot>
+        <x-slot name="cardOptions"><x-card-options /></x-slot>
+        <x-slot name="cardBody">
+            <div class="row">
+                <form action="{{ route('user.withdraws.index') }}" method="GET" class="col-12">
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <select id="companionId" name="companion_id" class="form-control select2">
+                                    <option value="" disabled selected>-- همیار را انتخاب کنید --</option>
+                                    @foreach ($companions as $companion)
+                                        <option value="{{ $companion->id }}" {{ request('companion_id') == $companion->id ? 'selected' : null }}>{{ $companion->name }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
-                            <div class="col-2 pt-5">
-                                <div class="form-group">
-                                    <button type="submit" class="btn btn-primary btn-block">جستجو</button>
-                                </div>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <input class="form-control fc-datepicker" id="start_date_show" type="text"
+                                    autocomplete="off" placeholder="از تاریخ" />
+                                <input name="start_date" id="start_date_hide" type="hidden"
+                                    value="{{ request('start_date') }}" />
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <input class="form-control fc-datepicker" id="end_date_show" type="text"
+                                    autocomplete="off" placeholder="تا تاریخ" />
+                                <input name="end_date" id="end_date_hide" type="hidden"
+                                    value="{{ request('end_date') }}" />
                             </div>
                         </div>
                     </div>
-                </div>
+                    <div class="row">
+                        <div class="col-xl-9 col-lg-8 col-md-6 col-12">
+                            <button class="btn btn-primary btn-sm btn-block" type="submit">جستجو <i
+                                    class="fa fa-search"></i></button>
+                        </div>
+                        <div class="col-xl-3 col-lg-4 col-md-6 col-12">
+                            <a href="{{ route('user.withdraws.index') }}" class="btn btn-danger btn-sm btn-block">حذف همه فیلتر ها
+                                <i class="fa fa-close"></i></a>
+                        </div>
+                    </div>
+                </form>
             </div>
-        </div>
-    </form> --}}
-
+        </x-slot>
+    </x-card>    
 
     <x-card>
         <x-slot name="cardTitle">لیست همه برداشت های کیف پول ({{ $withdraws->total() }})</x-slot>
@@ -75,7 +63,7 @@
                     <tr>
                         <th>ردیف</th>
                         <th>شناسه</th>
-                        <th>غرفه</th>
+                        <th>همیار</th>
                         <th>مبلغ(تومان)</th>
                         {{-- <th>شماره کارت</th> --}}
                         <th>وضعیت</th>
@@ -110,4 +98,23 @@
         </x-slot>
     </x-card>
      @include('companion::user.withdraw.includes.edit-modal')
+@endsection
+@section('scripts')
+    @include('core::includes.date-input-script', [
+        'dateInputId' => 'start_date_hide',
+        'textInputId' => 'start_date_show',
+    ])
+
+    @include('core::includes.date-input-script', [
+        'dateInputId' => 'end_date_hide',
+        'textInputId' => 'end_date_show',
+    ])
+    <script>
+         $(document).ready(function() {
+            $('#companionId').select2({
+                placeholder: "-- انتخاب همیار --",
+                allowClear: true
+            });
+        });
+    </script>
 @endsection
