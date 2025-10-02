@@ -1,4 +1,4 @@
-@extends('layouts.user.master')
+@extends('layouts.admin.master')
 @section('content')
     <div class="page-header">
         <x-breadcrumb :items="[['title' => 'گزارش همیاران']]" />
@@ -9,9 +9,19 @@
         <x-slot name="cardOptions"><x-card-options /></x-slot>
         <x-slot name="cardBody">
             <div class="row">
-                <form action="{{ route('user.reports.companions-filter-by-city',$city->id) }}" method="GET" class="col-12">
+                <form action="{{ route('admin.reports.companions') }}" method="GET" class="col-12">
                     <div class="row">
-                        <div class="col-lg-4">
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                <select id="cityId" name="city_id" class="form-control select2">
+                                    <option value="" disabled selected>-- شهر را انتخاب کنید --</option>
+                                    @foreach ($cities as $city)
+                                    <option value="{{ $city->id }}" {{ request('city_id') == $city->id ? 'selected' : null }}>{{ $city->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
                             <div class="form-group">
                                 <select id="companionId" name="companion_id" class="form-control select2">
                                     <option value="" disabled selected>-- همیار را انتخاب کنید --</option>
@@ -21,7 +31,7 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-lg-4">
+                        <div class="col-lg-3">
                             <div class="form-group">
                                 <input class="form-control fc-datepicker" id="start_date_show" type="text"
                                     autocomplete="off" placeholder="از تاریخ" />
@@ -29,7 +39,7 @@
                                     value="{{ request('start_date') }}" />
                             </div>
                         </div>
-                        <div class="col-lg-4">
+                        <div class="col-lg-3">
                             <div class="form-group">
                                 <input class="form-control fc-datepicker" id="end_date_show" type="text"
                                     autocomplete="off" placeholder="تا تاریخ" />
@@ -44,7 +54,7 @@
                                     class="fa fa-search"></i></button>
                         </div>
                         <div class="col-xl-3 col-lg-4 col-md-6 col-12">
-                            <a href="{{ route('user.reports.companions-filter-by-city',$city->id) }}" class="btn btn-danger btn-sm btn-block">حذف همه فیلتر ها
+                            <a href="{{ route('admin.reports.companions') }}" class="btn btn-danger btn-sm btn-block">حذف همه فیلتر ها
                                 <i class="fa fa-close"></i></a>
                         </div>
                     </div>
@@ -54,13 +64,9 @@
     </x-card>
 
     <x-card>
-        <x-slot name="cardTitle">لیست کمک های شهر {{ $city->name }}</x-slot>
+        <x-slot name="cardTitle">لیست کمک های حامیان</x-slot>
         <x-slot name="cardOptions"><x-card-options /></x-slot>
         <x-slot name="cardBody">
-            <div class="">
-                <span>کارشناس شهر :</span>
-                <span class="font-weight-bold">{{ $city->user->name }}</span>
-            </div>
             <x-table-component>
                 <x-slot name="tableTh">
                     <tr>
@@ -74,7 +80,8 @@
                     @forelse ($helps as $item)
                         <tr>
                             <td class="font-weight-bold">{{ $loop->iteration }}</td>
-                            <td>{{ $item->companion ? $item->companion->name . ' - ' . $item->companion->mobile : 'آزاد(بدون همیار)' }}</td>
+                            <td>{{ $item->companion ? $item->companion->name . ' - ' . $item->companion->mobile . ' | ' . ' شهر: ' . $item->companion->city->name
+                              : 'آزاد(بدون همیار)' }}</td>
                             <td>{{ $item->helpUser->name . ' - ' . $item->helpUser->mobile }}</td>
                             <td>
                                 @if ($item->type == 'cash')
@@ -115,6 +122,9 @@
      <script>
         $('#companionId').select2({
             placeholder: 'انتخاب همیار'
+        });
+        $('#cityId').select2({
+            placeholder: 'انتخاب شهر'
         });
     </script>
 @endsection

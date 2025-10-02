@@ -60,7 +60,7 @@ class ReportController extends BaseReportController
     {
         $companions = Companion::query()->where('city_id',$city->id)->get();
         $helps = Help::with('helpUser:id,name,mobile','companion:id,name,mobile','equipments:id,name')
-            ->reportFilters()
+            ->reportUserFilters()
             ->latest()
             ->get();
 

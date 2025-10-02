@@ -124,7 +124,7 @@ class Help extends Payable
                 $q->whereDate('created_at', '<=', $end_date);
             });
     }
-    public function scopeReportFilters($q){
+    public function scopeReportUserFilters($q){
         $companion_id = request('companion_id');
         $start_date = request('start_date');
         $end_date = request('end_date');
@@ -134,6 +134,30 @@ class Help extends Payable
                 $q->whereHas('companion',function ($q) use ($companion_id) {
                         $q->where('companion_id',$companion_id);
                     });
+            })
+            ->when($start_date, function ($q)use($start_date) {
+                $q->whereDate('created_at', '>=', $start_date);
+            })
+            ->when($end_date, function ($q) use($end_date) {
+                $q->whereDate('created_at', '<=', $end_date);
+            });
+    }
+    public function scopeReportAdminFilters($q){
+        $companion_id = request('companion_id');
+        $city_id = request('city_id');
+        $start_date = request('start_date');
+        $end_date = request('end_date');
+
+        return $q        
+            ->when($companion_id, function ($q) use($companion_id) {
+                $q->whereHas('companion',function ($q) use ($companion_id) {
+                        $q->where('companion_id',$companion_id);
+                    });
+            })
+            ->when($city_id, function ($q) use ($city_id) {
+                $q->whereHas('companion.city', function ($q) use ($city_id) {
+                    $q->where('id', $city_id);
+                });
             })
             ->when($start_date, function ($q)use($start_date) {
                 $q->whereDate('created_at', '>=', $start_date);

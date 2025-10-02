@@ -8,8 +8,7 @@ Route::middleware(['web', 'auth:admin'])->name('admin.')->prefix('admin')->group
     Route::get('/reports/partners-aggregate', [AdminReportController::class, 'partnersDetail'])->name('reports.partners-aggregate');
     Route::get('/reports/partners-aggregate-cities/{province}', [AdminReportController::class, 'partnersDetailCity'])->name('reports.partners-aggregate-cities');
     Route::get('/reports/partners-aggregate-list/{city}', [AdminReportController::class, 'partnersDetailList'])->name('reports.partners-aggregate-list');
-
-     Route::get('/reports/companions', [UserReportController::class, 'companions'])->name('reports.companions');
+     Route::get('/reports/companions', [AdminReportController::class, 'companions'])->name('reports.companions');
 });
 Route::middleware(['web', 'auth:user'])->name('user.')->prefix('user')->group(function () {
     Route::get('/reports/partners-aggregate', [UserReportController::class, 'partnerManagement'])->name('reports.partners-aggregate');

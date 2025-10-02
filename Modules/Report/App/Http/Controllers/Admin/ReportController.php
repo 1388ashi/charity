@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Modules\Area\App\Models\City;
 use Modules\Area\App\Models\Province;
+use Modules\Companion\App\Models\Companion;
+use Modules\Companion\App\Models\Help;
 use Modules\Partner\App\Models\PartnerGroup;
 use Modules\Report\App\Http\Controllers\BaseReportController;
 
@@ -31,5 +33,17 @@ class ReportController extends BaseReportController
         ];
 
         return view('report::admin.partners-detail',compact('provincesReport','provinces','allStatuses','totals'));
+    }
+
+    
+    public function companions(){
+        $companions = Companion::query()->select('id','name')->get();
+        $cities = City::query()->select('id','name')->get();
+        $helps = Help::with('helpUser:id,name,mobile','companion:id,name,mobile,city_id','companion.city:id,name','equipments:id,name')
+            ->reportAdminFilters()
+            ->latest()
+            ->get();
+
+        return view('report::admin.companions',compact('helps','companions','cities'));
     }
 }
