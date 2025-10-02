@@ -15,7 +15,7 @@ Route::middleware(['web', 'auth:user'])->name('user.')->prefix('user')->group(fu
     Route::get('/reports/partners-aggregate', [UserReportController::class, 'partnerManagement'])->name('reports.partners-aggregate');
     Route::get('/reports/partners-aggregate-cities/{province}', [UserReportController::class, 'partnersDetailCity'])->name('reports.partners-aggregate-cities');
     Route::get('/reports/partners-aggregate-list/{city}', [UserReportController::class, 'partnersDetailList'])->name('reports.partners-aggregate-list');
-    
+    Route::get('/report/transactions',[UserReportController::class, 'companionTransaction'])->name('reports.transactions');
     Route::get('/reports/companions', [UserReportController::class, 'companionManagement'])->name('reports.companions-management');
     Route::get('/reports/companions/{city}', [UserReportController::class, 'companionFilterByCity'])->name('reports.companions-filter-by-city');
 });

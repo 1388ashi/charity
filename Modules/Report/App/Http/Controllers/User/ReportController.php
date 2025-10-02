@@ -2,6 +2,7 @@
 
 namespace Modules\Report\App\Http\Controllers\User;
 
+use Bavix\Wallet\Models\Transaction;
 use Modules\Area\App\Models\City;
 use Modules\Companion\App\Models\Companion;
 use Modules\Companion\App\Models\Help;
@@ -27,6 +28,27 @@ class ReportController extends BaseReportController
         ]);
     }
 
+    public function companionTransaction()
+    {
+        $companions = Companion::latest('id')->get();
+        $transactions = Transaction::query()
+            ->whereHasMorph('payable', [Companion::class], function ($q) {
+                if (request('companion_id')) {
+                    $q->where('id', request('companion_id'));
+                }
+            })
+            ->when(request('start_date'), function ($q) {
+                $q->whereDate('created_at', '>=', request('start_date'));
+            })
+            ->when(request('end_date'), function ($q) {
+                $q->whereDate('created_at', '<=', request('end_date'));
+            })
+            ->latest()
+            ->paginate(20);
+
+        return view('report::user.companion-transactions', compact('transactions','companions'));
+    }
+    
     public function companionManagement()
     {
         return view('report::user.companion-management', [

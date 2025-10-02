@@ -2,23 +2,7 @@
 
 @section('content')
     <div class="page-header">
-        <x-breadcrumb :items="[['title' => 'برداشت های کیف پول']]" />
-            <div>
-                <button 
-                    class="btn btn-success" 
-                    data-target="#additionWallet"
-                    data-toggle="modal">
-                    افزایش
-                    <i class="fa fa-plus mr-1"></i>
-                </button>
-                <button 
-                    class="btn btn-danger" 
-                    data-target="#reductionWallet"
-                    data-toggle="modal">
-                    کاهش
-                    <i class="fa fa-minus mr-1"></i>
-            </button>
-        </div>
+        <x-breadcrumb :items="[['title' => 'گزارش تراکنش های کیف پول همیاران']]" />
     </div>
 
   <x-card>
@@ -26,7 +10,7 @@
         <x-slot name="cardOptions"><x-card-options /></x-slot>
         <x-slot name="cardBody">
             <div class="row">
-                <form action="{{ route('user.withdraws.index') }}" method="GET" class="col-12">
+                <form action="{{ route('user.reports.transactions') }}" method="GET" class="col-12">
                     <div class="row">
                         <div class="col-lg-4">
                             <div class="form-group">
@@ -61,7 +45,7 @@
                                     class="fa fa-search"></i></button>
                         </div>
                         <div class="col-xl-3 col-lg-4 col-md-6 col-12">
-                            <a href="{{ route('user.withdraws.index') }}" class="btn btn-danger btn-sm btn-block">حذف همه فیلتر ها
+                            <a href="{{ route('user.reports.transactions') }}" class="btn btn-danger btn-sm btn-block">حذف همه فیلتر ها
                                 <i class="fa fa-close"></i></a>
                         </div>
                     </div>
@@ -71,52 +55,44 @@
     </x-card>    
 
     <x-card>
-        <x-slot name="cardTitle">لیست همه برداشت های کیف پول ({{ $withdraws->total() }})</x-slot>
+        <x-slot name="cardTitle">گزارش تراکنش های کیف پول همیاران ({{ $transactions->total() }})</x-slot>
         <x-slot name="cardOptions"><x-card-options /></x-slot>
         <x-slot name="cardBody">
             @include('components.errors')
             <x-table-component>
                 <x-slot name="tableTh">
-                    <tr>
-                        <th>ردیف</th>
-                        <th>شناسه</th>
-                        <th>همیار</th>
-                        <th>مبلغ(تومان)</th>
-                        {{-- <th>شماره کارت</th> --}}
-                        <th>وضعیت</th>
-                        <th>تاریخ ثبت</th>
-                        <th>عملیات</th>
-                    </tr>
+                    @php($tableTh = ['ردیف', 'همیار','نوع تراکنش','مبلغ(تومان)','توضیحات','تاریخ تراکنش'])
+                        @foreach ($tableTh as $th)
+                            <th>{{ $th }}</th>
+                        @endforeach
                 </x-slot>
                 <x-slot name="tableTd">
-                    @forelse($withdraws as $withdraw)
-                        <tr>
+                    @forelse($transactions as $item)
+                       <tr>
                             <td class="font-weight-bold">{{ $loop->iteration }}</td>
-                            <td>{{ $withdraw->id }}</td>
-                            <td>{{ $withdraw->companion->name . ' ' . '-' . ' ' . $withdraw->companion->mobile }}</td>
-                            <td>{{ number_format($withdraw->amount) }}</td>
-                            {{-- <td>{{ $withdraw->bankAccount->cart_number }}</td> --}}
-                            <td>@include('companion::user.withdraw.includes.status', ['status' => $withdraw->status])</td>
-                            <td>{{ verta($withdraw->created_at)->format('Y/m/d H:i') }}</td>
-                            <td> 
-                                @include('core::includes.edit-modal-button', [
-                                    'target' => '#editStatusModal-' . $withdraw->id,
-                                ])
+                            <td>{{ $item->payable->name }}</td>
+                            <td>
+                                @if($item->type == 'deposit')
+                                    <span title="نوع تراکنش" class="badge badge-success">افزایش</span>
+                                @else
+                                    <span title="نوع تراکنش" class="badge badge-danger">کاهش</span>
+                                @endif
+
                             </td>
+                            <td style="direction: ltr;">{{ number_format($item->amount) }}</td>
+                            <td>{{ $item->meta ? $item->meta['description'] : '-' }}</td>
+                            <td>{{ verta($item->created_at)->format('Y/m/d H:i') }}</td>
                         </tr>
                     @empty
                         @include('core::includes.data-not-found-alert', ['colspan' => 7])
                     @endforelse
                 </x-slot>
                 <x-slot name="extraData">
-                    {{ $withdraws->onEachSide(0)->links('vendor.pagination.bootstrap-4') }}
+                    {{ $transactions->onEachSide(0)->links('vendor.pagination.bootstrap-4') }}
                 </x-slot>
             </x-table-component>
         </x-slot>
     </x-card>
-     @include('companion::user.withdraw.includes.edit-modal')
-     @include('companion::user.withdraw.includes.reduction-wallet')
-     @include('companion::user.withdraw.includes.addition-wallet')
 @endsection
 @section('scripts')
     @include('core::includes.date-input-script', [
@@ -128,20 +104,4 @@
         'dateInputId' => 'end_date_hide',
         'textInputId' => 'end_date_show',
     ])
-    <script>
-         $(document).ready(function() {
-            $('#companionId').select2({
-                placeholder: "-- انتخاب همیار --",
-                allowClear: true
-            });
-            $('#companionReduction').select2({
-                placeholder: "-- انتخاب همیار --",
-                allowClear: true
-            });
-            $('#companionAddition').select2({
-                placeholder: "-- انتخاب همیار --",
-                allowClear: true
-            });
-        });
-    </script>
 @endsection

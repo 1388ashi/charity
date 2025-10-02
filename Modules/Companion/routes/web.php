@@ -14,6 +14,7 @@ Route::middleware(['web', 'auth:user'])->name('user.')->prefix('user')->group(fu
     Route::resource('companions', UserCompanionController::class)->except(['create','index','edit','show']);
     Route::resource('withdraws', UserWithdrawController::class)->except(['show','create','edit']);
     Route::put('withdraws/edit-status/{withdraw}',[UserWithdrawController::class, 'editStatus'])->name('withdraws.edit-status');
+    Route::post('withdraws/change-balance-wallet',[UserWithdrawController::class, 'changeBalanceWallet'])->name('withdraws.change-balance-wallet');
 });
 Route::middleware(['web', 'auth:help_user'])->prefix('help-user')->group(function () {
     Route::get('/', [HelpUserController::class,'profile'])->name('help-user');
