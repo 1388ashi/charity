@@ -3,6 +3,22 @@
 @section('content')
     <div class="page-header">
         <x-breadcrumb :items="[['title' => 'گزارش تراکنش های کیف پول همیاران']]" />
+        <div>
+            <button 
+                class="btn btn-success" 
+                data-target="#additionWallet"
+                data-toggle="modal">
+                افزایش
+                <i class="fa fa-plus mr-1"></i>
+            </button>
+            <button 
+                class="btn btn-danger" 
+                data-target="#reductionWallet"
+                data-toggle="modal">
+                کاهش
+                <i class="fa fa-minus mr-1"></i>
+            </button>
+        </div>
     </div>
 
   <x-card>
@@ -93,6 +109,8 @@
             </x-table-component>
         </x-slot>
     </x-card>
+        @include('companion::user.withdraw.includes.reduction-wallet')
+     @include('companion::user.withdraw.includes.addition-wallet')
 @endsection
 @section('scripts')
     @include('core::includes.date-input-script', [

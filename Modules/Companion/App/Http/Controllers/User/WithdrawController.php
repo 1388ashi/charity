@@ -21,7 +21,7 @@ class WithdrawController extends Controller
     public function editStatus(Withdraw $withdraw, Request $request)
     {
         $withdraw->update(['status' => $request->status]);
-       if ($request->status == 'approved') {
+        if ($request->status == 'approved') {
             $companion = $withdraw->companion;
 
             $companion->withdraw($withdraw->amount, [
