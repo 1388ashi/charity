@@ -31,9 +31,12 @@ class ChangeAmountRequest extends FormRequest
 
     public function checkBalance()
     {
-        $companion = Companion::find($this->companion_id);
-        if ($companion->wallet->balance < $this->amount) {
-            throw Helpers::makeValidationException('مبلغ مورد نظر از شارژ کیف پول بیشتر است');
+        if ($this->type == 'reduction') {
+            $companion = Companion::find($this->companion_id);
+            
+            if ($companion->wallet->balance < $this->amount) {
+                throw Helpers::makeValidationException('مبلغ مورد نظر از شارژ کیف پول بیشتر است');
+            }
         }
     }
 
