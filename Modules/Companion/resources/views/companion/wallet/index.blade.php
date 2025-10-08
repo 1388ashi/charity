@@ -14,7 +14,7 @@
                 <div class="col">
                     <ul>
                         <li><strong>موجودی کیف پول: </strong> {{ number_format($companion->wallet->balance) }}  تومان </li>
-                        @if ($companion->salary_type = 'percentage' && $companion->salary)
+                        @if ($companion->salary_type == 'percentage' && $companion->salary)
                             <li class="mt-1"><strong>درصد شما از هر کمک: </strong> {{ number_format($companion->salary) }}% </li>
                         @endif
                     </ul>
