@@ -24,7 +24,7 @@ class PartnerController extends Controller
     }
     public function store(StoreRequest $request)
     { 
-        //TODO
+        //TODO:
         //in try catch biad o baadesh sms bereh be user == $request->city_id;
         // yek darkhast jadid dar shahr city_name sabt shod;
         $group = PartnerGroup::create([
