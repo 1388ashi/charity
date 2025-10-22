@@ -16,7 +16,7 @@ return [
     'sms' => [
         'driver' => 'kavenegar',
         'sender' => '1000596446',
-        'api_key' => '3853687158734D783445694D6B2B632F4957446B47796E696B7679363435634E32433245376159543368673D',
+        'api_key' => '4F68793747657139716358636C76546D45787135696F636D497A4156464E5175336D2B357064664F6837493D',
         'patterns' => [
             'user_login' => 'user-login',
             'companion_login' => 'companion-login',

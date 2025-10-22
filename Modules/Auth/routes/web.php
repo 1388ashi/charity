@@ -15,7 +15,7 @@ Route::middleware(['web', 'auth:admin'])->name('admin.')->prefix('admin')->group
 });
 
 //user
-Route::get('user/login', [UserAuthController::class, 'showLoginForm'])->name('user.login.form');
+Route::get('user/login/{mobile?}', [UserAuthController::class, 'showLoginForm'])->name('user.login.form');
 Route::get('user/sms-token', [UserAuthController::class, 'showSmsPage'])->name('user.sms-page');
 Route::post('user/login', [UserAuthController::class, 'login'])->name('user.login');
 
