@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Log;
 use Modules\Auth\App\Http\Requests\UserLoginRequest;
 use Modules\Core\Classes\CoreSettings;
 use Modules\Core\Helpers\Helpers;
-use Modules\Core\Helpers\Sms;
+use Modules\Sms\Sms;
 use Modules\User\App\Models\SmsToken;
 use Modules\User\App\Models\User;
 

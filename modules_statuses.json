@@ -10,5 +10,6 @@
     "Report": true,
     "Invoice": true,
     "Setting": true,
+    "Sms": true,
     "Companion": true
 }
