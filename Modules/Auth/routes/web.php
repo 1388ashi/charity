@@ -24,7 +24,8 @@ Route::middleware(['web', 'auth:user'])->name('user.')->prefix('user')->group(fu
 });
 
 //companion
-Route::get('companion/login', [CompanionAuthController::class, 'showLoginForm'])->name('companion.login.form');
+Route::get('companion/login/{mobile?}', [CompanionAuthController::class, 'showLoginForm'])->name('companion.login.form');
+Route::get('companion/sms-token', [CompanionAuthController::class, 'showSmsPage'])->name('companion.sms-page');
 Route::post('companion/login', [CompanionAuthController::class, 'login'])->name('companion.login');
 
 Route::middleware(['web', 'auth:companion'])->name('companion.')->prefix('companion')->group(function () {

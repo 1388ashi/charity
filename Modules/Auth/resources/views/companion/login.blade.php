@@ -13,7 +13,7 @@
                                         <h1 class="mb-2">ورود</h1>
                                         <p class="text-muted">از طریق فرم زیر می توانید به پنل خود وارد شوید.</p>
                                     </div>
-                                    <form class="card-body pt-3" id="login" name="login" method="POST" action="{{ route('companion.login') }}">
+                                    <form class="card-body pt-3" id="login" name="login" method="GET" action="{{ route('companion.sms-page') }}">
                                         @csrf
                                         <div class="form-group">
                                             <label class="form-label" for="mobile">شماره موبایل</label>
