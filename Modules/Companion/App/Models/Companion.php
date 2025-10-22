@@ -11,7 +11,10 @@ use Bavix\Wallet\Interfaces\CartInterface;
 use Bavix\Wallet\Interfaces\ProductInterface;
 use Bavix\Wallet\Models\Transfer;
 use Bavix\Wallet\Interfaces\Customer as CompanionWallet;
+use Illuminate\Support\Facades\Log;
 use Modules\Area\App\Models\City;
+use Modules\Core\Classes\CoreSettings;
+use Modules\Sms\Sms;
 
 class Companion extends Authenticatable implements CompanionWallet
 {
@@ -25,11 +28,25 @@ class Companion extends Authenticatable implements CompanionWallet
     protected static function booted()
     {
         static::created(function ($companion) {
-            CompanionCode::create([
+            $companionCode = CompanionCode::create([
                 'companion_id' => $companion->id,
                 'code' => Str::random(10),
             ]);
-            //TODO: send code to companion| generate url and code
+
+            $pattern = app(CoreSettings::class)->get('sms.patterns.create_companion');
+
+            $url = env('APP_URL') . '/help-user?code=' . $companionCode->code;
+
+            $output = Sms::pattern($pattern)
+                ->data([
+                    'token' => $url,
+                ])
+                ->to([$companion->mobile])
+                ->send();
+
+            if ($output['status'] != 200) {
+                Log::debug('SMS sending failed', [$output]);
+            }
         });
     }
     public function city()

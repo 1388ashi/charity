@@ -3,13 +3,14 @@
 namespace Modules\Companion\App\Http\Controllers\HelpUser;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Modules\Companion\App\Http\Requests\HelpUser\EquipmentHelpRequest;
 use Modules\Companion\App\Http\Requests\HelpUser\UpdateRequest;
 use Modules\Companion\App\Models\CompanionCode;
 use Modules\Companion\App\Models\Help;
 use Modules\Companion\App\Models\HelpUser;
+use Modules\Core\Classes\CoreSettings;
+use Modules\Sms\Sms;
 use Modules\Equipment\App\Models\Equipment;
 use Modules\Invoice\App\Models\Payment;
 
@@ -68,13 +69,20 @@ class HelpUserController extends Controller
                 ])
                 ->toArray();
             $help->equipments()->attach($pivotData);
-            //go to list
+            
+            $pattern = app(CoreSettings::class)->get('sms.patterns.new_help_user');
+            $output = Sms::pattern($pattern)  
+            ->data([  
+                'token' => '.',
+            ])->to([$help->helpUser->mobile])->send();  
+            if ($output['status'] != 200){
+                Log::debug('', [$output]);
+            }
             return redirect()->to('/help-user/list?code=' . urlencode($request->code ?? ''))->with('success', 'همیاری شما با موفقیت ثبت شد ✅');
         }
         elseif($request->type == 'cash' && $request->amount){
             return $help->pay();
         }
-        //TODO: maybe send sms to that person;
     }
 
 }

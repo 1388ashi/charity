@@ -3,14 +3,12 @@
 namespace Modules\Companion\App\Models;
 
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Facades\Log;
 use Modules\Companion\App\Models\HelpUser;
-
+use Modules\Core\Classes\CoreSettings;
+use Modules\Sms\Sms;
 use Modules\Equipment\App\Models\Equipment;
 use Modules\Invoice\Classes\Payable;
-
-// use Modules\Companion\Database\Factories\HelpFactory;
 
 class Help extends Payable
 {
@@ -192,7 +190,14 @@ class Help extends Payable
                'description' => "درصد بابت کمک با شناسه" . $this->id,
            ]);
         }
-        //send sms to user
+        $pattern = app(CoreSettings::class)->get('sms.patterns.new_help_user');
+        $output = Sms::pattern($pattern)  
+        ->data([  
+            'token' => '.',
+        ])->to([$this->helpUser->mobile])->send();  
+        if ($output['status'] != 200){
+            Log::debug('', [$output]);
+        }
         return $this->callBackViewPayment($invoice);
     }
 }
