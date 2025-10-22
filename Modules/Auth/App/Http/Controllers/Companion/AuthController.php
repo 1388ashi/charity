@@ -58,7 +58,7 @@ class AuthController extends Controller
         return view('auth::companion.sms',['mobile' => $request->mobile]);
     }
 
-    public function login(UserLoginRequest $request): RedirectResponse
+    public function login(UserLoginRequest $request)
     {
         $request->smsToken->verified_at = now();
         $request->smsToken->save();
@@ -78,7 +78,7 @@ class AuthController extends Controller
         ]);
     }
 
-    public function logout(Request $request): \Illuminate\Http\RedirectResponse
+    public function logout(Request $request)
     {
         Auth::logout();
         $request->session()->invalidate();

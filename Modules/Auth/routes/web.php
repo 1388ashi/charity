@@ -34,6 +34,7 @@ Route::middleware(['web', 'auth:companion'])->name('companion.')->prefix('compan
 
 //helpUser
 Route::get('help-user/login', [HelpUserAuthController::class, 'showLoginForm'])->name('help-user.login.form');
+Route::get('help-user/sms-token', [HelpUserAuthController::class, 'showSmsPage'])->name('help-user.sms-page');
 Route::post('help-user/login', [HelpUserAuthController::class, 'login'])->name('help-user.login');
 
 Route::middleware(['web', 'auth:help_user'])->name('help-user.')->prefix('help-user')->group(function () {

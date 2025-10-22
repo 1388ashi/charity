@@ -11,17 +11,18 @@
                                 <div class="card">
                                     <div class="p-4 pt-6 text-center">
                                         <div class="text-left">
-                                            <a href="{{ route('exhibitor.login.form',$mobile) }}" class="btn btn-info btn-sm">
+                                            <a href="{{ route('help-user.login.form',$mobile) }}" class="btn btn-info btn-sm">
                                                 <i class="text-white fa fa-arrow-left"></i>
                                             </a>
                                         </div>
                                         <h1 class="mb-2">ورود</h1>
                                         <p class="text-muted">کد ورود به شماره شما پیامک شده.</p>
                                     </div>
-                                    <form class="card-body pt-3" id="login" name="login" method="POST" action="{{ route('exhibitor.login') }}">
+                                    <form class="card-body pt-3" id="login" name="login" method="POST" action="{{ route('help-user.login') }}">
                                         @include('components.errors')
                                         @csrf
                                         <input type="hidden" name="mobile" value="{{$mobile}}">
+                                        <input type="hidden" name="code" value="{{$code}}">
                                         <div class="form-group">
                                             <label class="form-label" for="sms_token">کد ورود:</label>
                                             <input class="form-control @error('sms_token') is-invalid @enderror" id="sms_token" type="tel" maxlength="5" name="sms_token" value="{{ old('sms_token') }}" autofocus required>

@@ -13,7 +13,7 @@
                                         <h1 class="mb-2">ورود</h1>
                                         <p class="text-muted">برای کمک وارد پنل شوید.</p>
                                     </div>
-                                    <form class="card-body pt-3" id="login" name="login" method="POST" action="{{ route('help-user.login') }}">
+                                    <form class="card-body pt-3" id="login" name="login" method="GET" action="{{ route('help-user.sms-page') }}">
                                         @csrf
                                         <input type="hidden" name="code" value="{{ $code }}">
                                         <div class="form-group">
