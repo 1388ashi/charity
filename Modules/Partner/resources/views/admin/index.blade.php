@@ -132,7 +132,7 @@
                             <td>{{ $partnerGroup->partners[0]->name }}</td>
                             <td>{{ $partnerGroup->province->name }}</td>
                             <td>{{ $partnerGroup->city->name }}</td>
-                            <td>{{ $partnerGroup->city->user->name }}</td>
+                            <td>{{ $partnerGroup->city->user?->name ?? '-' }}</td>
                             <td>@include('partner::management.includes.statuses', ['status' => $partnerGroup->status])</td>
                             <td>{{ verta($partnerGroup->created_at)->format('Y/m/d H:i') }}</td>
                             <td>
