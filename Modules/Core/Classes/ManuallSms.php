@@ -72,4 +72,19 @@ class ManuallSms {
 
         return self::execute_manually_to_kavenegar($smsPatternManually);
     }
+    public static function partnerChangeStatus($pattern, $mobile, $status)
+    {
+        $smsPatternManually = [
+            "receptor" => $mobile,
+            "token" => '.',
+            "token2" => null,
+            "token3" => null,
+            "template" => $pattern,
+            "type" => null,
+            "token10" => $status,
+            "token20" => null,
+        ];
+
+        return self::execute_manually_to_kavenegar($smsPatternManually);
+    }
 }

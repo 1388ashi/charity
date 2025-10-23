@@ -4,10 +4,14 @@ namespace Modules\Partner\App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Modules\Area\App\Models\City;
 use Modules\Area\App\Models\Province;
+use Modules\Core\Classes\CoreSettings;
+use Modules\Core\Classes\ManuallSms;
 use Modules\Partner\App\Models\Note;
 use Modules\Partner\App\Models\PartnerGroup;
+use Modules\Sms\Sms;
 use Modules\User\App\Models\User;
 
 class PartnerController extends Controller
@@ -46,8 +50,16 @@ class PartnerController extends Controller
     public function updateStatus(PartnerGroup $partnerGroup, Request $request)
     {
         $partnerGroup->update(['status' => $request->status,'status_description' => $request->status_description]);
-        //TODO:
-        //sms bere be karbar
+        $partnerPhone = $partnerGroup->partners()->first()?->phone;
+        $pattern = app(CoreSettings::class)->get('sms.patterns.create_partner_to_city');
+        $output = ManuallSms::partnerChangeStatus(
+            $pattern,
+            $partnerPhone,
+            config("partner.statuses.{$partnerGroup->status}"),
+        );
+        if ($output['status'] != 200){
+            Log::debug('', [$output]);
+        }
 
         return redirect()->back()->with('success', 'وضعیت با موفقیت به روزرسانی شد.');
     }
