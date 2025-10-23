@@ -71,7 +71,7 @@
             <x-table-component>
                 <x-slot name="tableTh">
                     <tr>
-                        @php($tableTh = ['ردیف', 'نام', 'کاربر','تعداد شهر ها', 'وضعیت', 'تاریخ ثبت', 'عملیات'])
+                        @php($tableTh = ['ردیف', 'نام', 'کارشناس','تعداد شهر ها', 'وضعیت', 'تاریخ ثبت', 'عملیات'])
                         @foreach ($tableTh as $th)
                             <th>{{ $th }}</th>
                         @endforeach
@@ -82,7 +82,7 @@
                         <tr>
                             <td class="font-weight-bold">{{ $loop->iteration }}</td>
                             <td>{{ $province->name }}</td>
-                            <td>{{ $province->user?->name }}</td>
+                            <td>{{ $province->user?->name ?? '-' }}</td>
                             <td>{{ $province->cities->count() }}</td>
                             <td>@include('core::includes.status', ['status' => $province->status])</td>
                             <td>{{ verta($province->created_at)->format('Y/m/d H:i') }}</td>

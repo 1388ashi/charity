@@ -23,6 +23,9 @@ return [
             'create_companion' => 'create-companion',
             'companion_login' => 'companion-login',
             'help_user_login' => 'help-user-login',
+            'create_partner_to_person' => 'create-partner-to-person',
+            'create_partner_to_city' => 'create-partner-to-city',
+            'change_status_partner' => 'change-status-partner',
         ],
         'new_order' => [
             'dont_send_full_name' => false

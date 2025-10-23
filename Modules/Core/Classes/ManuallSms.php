@@ -56,4 +56,20 @@ class ManuallSms {
         }
 
     }
+
+    public static function partnerCreate($pattern, $mobile, $cityName)
+    {
+        $smsPatternManually = [
+            "receptor" => $mobile,
+            "token" => '.',
+            "token2" => null,
+            "token3" => null,
+            "template" => $pattern,
+            "type" => null,
+            "token10" => $cityName,
+            "token20" => null,
+        ];
+
+        return self::execute_manually_to_kavenegar($smsPatternManually);
+    }
 }
