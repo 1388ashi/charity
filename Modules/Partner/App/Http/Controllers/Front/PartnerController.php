@@ -60,12 +60,13 @@ class PartnerController extends Controller
             }
 
             //sms to person
+            $partnerPhone = $group->partners()->first()?->phone;
             $pattern = app(CoreSettings::class)->get('sms.patterns.create_partner_to_person');
             $output = Sms::pattern($pattern)
                 ->data([
                     'token' => '.',
                 ])
-                ->to([$group[0]->phone])
+                ->to([$partnerPhone])
                 ->send();
 
             if ($output['status'] != 200) {
