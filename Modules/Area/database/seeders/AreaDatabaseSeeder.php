@@ -13,7 +13,7 @@ class AreaDatabaseSeeder extends Seeder
     public function run(): void
     {
         Model::unguard();
-
+dd(1);
         $this->call(ProvincesTableSeeder::class);
         $this->call(CitiesTableSeeder::class);
     }
