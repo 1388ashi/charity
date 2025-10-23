@@ -51,7 +51,7 @@ class PartnerController extends Controller
     {
         $partnerGroup->update(['status' => $request->status,'status_description' => $request->status_description]);
         $partnerPhone = $partnerGroup->partners()->first()?->phone;
-        $pattern = app(CoreSettings::class)->get('sms.patterns.create_partner_to_city');
+        $pattern = app(CoreSettings::class)->get('sms.patterns.change_status_partner');
         $output = ManuallSms::partnerChangeStatus(
             $pattern,
             $partnerPhone,
