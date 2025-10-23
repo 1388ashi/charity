@@ -72,15 +72,16 @@ class PartnerController extends Controller
                 Log::debug('SMS sending failed', [$output]);
             }
             //sms to user city
-            $pattern = app(CoreSettings::class)->get('sms.patterns.create_partner_to_city');
-            // $admin = Admin::where('id',1)->first();
-            $output = ManuallSms::partnerCreate(
-                $pattern,
-                 $group->city->user->mobile,
-                $group->city->name,
-            );
-            if ($output['status'] != 200){
-                Log::debug('', [$output]);
+            if ($group->city->user) {
+                $pattern = app(CoreSettings::class)->get('sms.patterns.create_partner_to_city');
+                $output = ManuallSms::partnerCreate(
+                    $pattern,
+                    $group->city->user->mobile,
+                    $group->city->name,
+                );
+                if ($output['status'] != 200){
+                    Log::debug('', [$output]);
+                }
             }
 
             DB::commit();
