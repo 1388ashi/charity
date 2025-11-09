@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Log;
 use Modules\Auth\App\Http\Requests\UserLoginRequest;
 use Modules\Core\Classes\CoreSettings;
 use Modules\Core\Helpers\Helpers;
+use Modules\Core\Rules\IranMobile;
 use Modules\Sms\Sms;
 use Modules\User\App\Models\SmsToken;
 use Modules\User\App\Models\User;
@@ -28,6 +29,9 @@ class AuthController extends Controller
     }
     public function showSmsPage(Request $request)
     {
+        $validated = $request->validate([
+            'mobile' => ['required', 'digits:11', new IranMobile()],
+        ]);
         $pattern = app(CoreSettings::class)->get('sms.patterns.user_login');
         $token = Helpers::randomNumbersCode(5);
         $output = Sms::pattern($pattern)  
