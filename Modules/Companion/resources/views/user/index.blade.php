@@ -40,7 +40,7 @@
                             </td>
                         </tr>
                     @empty
-                        @include('core::includes.data-not-found-alert', ['colspan' => 5])
+                        @include('core::includes.data-not-found-alert', ['colspan' => 6])
                     @endforelse
                 </x-slot>
             </x-table-component>
