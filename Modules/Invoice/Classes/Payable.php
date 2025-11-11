@@ -28,7 +28,7 @@ abstract class Payable extends Model
         // Implement model logic
 
         return response()->json([
-            'success' => true,
+            'success' => true,  
             'message' => __('Payment made successfully'),
             'data' => [
                 'invoice_id' => $invoice->id,

@@ -410,6 +410,16 @@
     <script src="{{ asset('assets/plugins/notify/js/jquery.growl.js') }}"></script>
     <script src="{{ asset('assets/js/main.js') }}"></script>
     <script>
+         $(document).ready(function() {
+            $('#provinceSelect').select2({
+                placeholder: "-- انتخاب استان --",
+                allowClear: true
+            });
+            $('#citySelect').select2({
+                placeholder: "-- انتخاب شهر --",
+                allowClear: true
+            });
+        });
         let activeStep = "step1"
         let btnActiveStep = "btn-step1"
         let ActiveStepIndex = 1

@@ -74,7 +74,7 @@
                                     {{ $item->name }}
                                 </a>
                             </td>
-                            <td>{{ $item->user->name }}</td>
+                            <td>{{ $item->user?->name ?? '-' }}</td>
                             <td>
                                 <x-show-status-partner :item="$item"/>
                             </td>
