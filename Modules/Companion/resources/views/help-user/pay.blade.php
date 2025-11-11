@@ -82,6 +82,7 @@
                     @csrf
                     <input type="hidden" id="helpType" name="type" value="cash">
                     <input type="hidden" name="companion_id" value="{{ $code ? $companion->id : null }}">
+                    <input type="hidden" name="code" value="{{ $code }}">
 
                     <div class="d-flex justify-content-center filter-btn-form my-4">
                         <button type="button" id="btn-cash" class="active-btn btn-filter ml-3" onclick="setStepForm('cash')">کمک مالی</button>
@@ -135,10 +136,9 @@
                 </form>
             </div>
         </div>
-        <hr/>
-        <a target="_blank" href="https://trustseal.enamad.ir/?id=670150&Code=tz2EC3pRVD2SxwvIEK3K0tOZc3MhRid6"><img referrerpolicy='origin' src='https://trustseal.enamad.ir/logo.aspx?id=670150&Code=tz2EC3pRVD2SxwvIEK3K0tOZc3MhRid6' alt='' style='cursor:pointer' code='tz2EC3pRVD2SxwvIEK3K0tOZc3MhRid6'></a>
     </div>
-
+    <hr/>
+        <a target="_blank" href="https://trustseal.enamad.ir/?id=670150&Code=tz2EC3pRVD2SxwvIEK3K0tOZc3MhRid6"><img referrerpolicy='origin' src='https://trustseal.enamad.ir/logo.aspx?id=670150&Code=tz2EC3pRVD2SxwvIEK3K0tOZc3MhRid6' alt='' style='cursor:pointer' code='tz2EC3pRVD2SxwvIEK3K0tOZc3MhRid6'></a>
 @endsection
 @section('scripts')
     <script>
